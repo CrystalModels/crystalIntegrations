@@ -178,14 +178,11 @@ Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
            // echo json_encode($response1);
         } else {
             echo 'Error: Autenticación fallida';
-            echo $headerslink;
              //echo json_encode($response1);
         }
     } else {
         echo 'Error: Encabezados faltantes';
-        echo $headerslink;
     }
-    echo $headerslink;
 });
 
 
