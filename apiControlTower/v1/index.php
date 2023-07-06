@@ -166,7 +166,11 @@ Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
     $primeros_ocho = substr($myuuid, 0, 8);
     $query2= mysqli_query($conectar,"INSERT rooms (roomId,name,comments) values ('$primeros_ocho','$name','$comments')");
                
-                         
+    if ($query2) {
+        echo "La consulta se realizó correctamente.";
+    } else {
+        echo "Error en la consulta: " . mysqli_error($conectar);
+    }        
  echo "true";
 
 
