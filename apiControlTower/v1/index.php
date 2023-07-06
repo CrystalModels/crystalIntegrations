@@ -153,7 +153,7 @@ Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
 
         // Realizar acciones basadas en los valores de los encabezados
 
-echo $response1;
+
         if ($response1 == 'true' ) {
 
             $name= Flight::request()->data->name;
@@ -167,11 +167,11 @@ echo $response1;
     $query2= mysqli_query($conectar,"INSERT rooms (roomId,name,comments) values ('$primeros_ocho','$name','$comments')");
                
     if ($query2) {
-        echo "La consulta se realizó correctamente.";
+        echo "true";
     } else {
         echo "Error en la consulta: " . mysqli_error($conectar);
     }        
- echo "true";
+ 
 
 
 
