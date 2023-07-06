@@ -97,15 +97,18 @@ Flight::route('POST /postSchedule/', function () {
 
 
 
-Flight::route('POST /postRooms/', function () {
+Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
+  
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
     
+    $parts = explode(" ", $headerslink);
+
+    $apiKey=$parts[0];
+    $xApiKey=$parts[1];
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
-        // Leer los datos de la solicitud
-        
+    if (!empty($apiKey) && !empty($xApiKey)) {    
             
            
        
@@ -115,9 +118,6 @@ Flight::route('POST /postRooms/', function () {
 
 
 
-        // Acceder a los encabezados
-        $apiKey = $headers['Api-Key'];
-        $xApiKey = $headers['x-api-Key'];
         
 
 
