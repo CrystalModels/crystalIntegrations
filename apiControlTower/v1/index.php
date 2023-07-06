@@ -153,7 +153,7 @@ Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
 
         // Realizar acciones basadas en los valores de los encabezados
 
-
+echo $response1;
         if ($response1 == 'true' ) {
 
             $name= Flight::request()->data->name;
