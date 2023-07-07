@@ -261,28 +261,17 @@ Flight::route('POST /putRooms/@apk/@xapk', function ($apk,$xapk) {
 });
 
 
-Flight::route('POST /putRoomsStatus/', function () {
+
+
+Flight::route('POST /putRoomsStatus/@apk/@xapk', function ($apk,$xapk) {
+  
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
-    
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
+    if (!empty($apk) && !empty($xapk)) {    
+            
         // Leer los datos de la solicitud
         
             
-           
-       
-
-
-
-
-
-
-        // Acceder a los encabezados
-        $apiKey = $headers['Api-Key'];
-        $xApiKey = $headers['x-api-Key'];
-        
 
 
 
@@ -292,8 +281,8 @@ Flight::route('POST /putRoomsStatus/', function () {
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
       
         $data = array(
-          'apiKey' =>$apiKey, 
-          'xApiKey' => $xApiKey
+            'apiKey' =>$apk, 
+            'xApiKey' => $xapk
           
           );
       $curl = curl_init();
@@ -320,8 +309,8 @@ Flight::route('POST /putRoomsStatus/', function () {
 
         if ($response1 == 'true' ) {
 
-            $value= Flight::request()->data->value;
             $roomId= Flight::request()->data->roomId;
+            $value= Flight::request()->data->value;
 
     $conectar=conn();
     if($value=="act"){
@@ -352,6 +341,8 @@ Flight::route('POST /putRoomsStatus/', function () {
 
 
            
+
+           
           
            // echo json_encode($response1);
         } else {
@@ -362,6 +353,8 @@ Flight::route('POST /putRoomsStatus/', function () {
         echo 'Error: Encabezados faltantes';
     }
 });
+
+
 
 
 
