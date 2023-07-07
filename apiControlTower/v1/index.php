@@ -103,19 +103,7 @@ Flight::route('POST /postRooms/@apk/@xapk', function ($apk,$xapk) {
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
     if (!empty($apk) && !empty($xapk)) {    
             
-           
-       
-
-
-
-
-
-
         
-
-
-
-
         $sub_domaincon=new model_domain();
         $sub_domain=$sub_domaincon->dom();
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
