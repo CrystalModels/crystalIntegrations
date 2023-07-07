@@ -246,7 +246,9 @@ Flight::route('POST /putRooms/@apk/@xapk', function ($apk,$xapk) {
  echo "true";
 
 
-
+ echo $name." ";
+    echo $roomId." ";
+    echo $comments;
 
 
            
