@@ -335,8 +335,6 @@ Flight::route('POST /putRoomsStatus/@apk/@xapk', function ($apk,$xapk) {
     }
                          
  echo "true";
-echo $value;
-
 
 
 
