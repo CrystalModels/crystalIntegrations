@@ -97,15 +97,11 @@ Flight::route('POST /postSchedule/', function () {
 
 
 
-Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
+Flight::route('POST /postRooms/@apk/@xapk', function ($apk,$xapk) {
   
     header("Access-Control-Allow-Origin: *");
-    $parts = explode(" ", $headerslink);
-
-    $apiKey=$parts[0];
-    $xApiKey=$parts[1];
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (!empty($apiKey) && !empty($xApiKey)) {    
+    if (!empty($apk) && !empty($xapk)) {    
             
            
        
@@ -125,8 +121,8 @@ Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
       
         $data = array(
-          'apiKey' =>$apiKey, 
-          'xApiKey' => $xApiKey
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
           
           );
       $curl = curl_init();
