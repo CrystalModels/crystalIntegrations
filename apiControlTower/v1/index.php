@@ -243,12 +243,9 @@ Flight::route('POST /putRooms/@apk/@xapk', function ($apk,$xapk) {
     $query2= mysqli_query($conectar,"UPDATE rooms SET name='$name',comments='$comments' where roomId='$roomId'");
                
                          
- echo "true";
+ echo "true1";
 
 
- echo $name." ";
-    echo $roomId." ";
-    echo $comments;
 
 
            
