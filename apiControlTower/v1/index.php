@@ -187,14 +187,14 @@ Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
 });
 
 
-Flight::route('POST /postRooms1/@number', function ($number) {
+Flight::route('POST /postRooms1/@number/@number2', function ($number,$number1) {
 
     header("Access-Control-Allow-Origin: *");
     
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
     
 echo "si si ";
-      echo $number;
+      echo $number." ".$number1;
     
 });
 
