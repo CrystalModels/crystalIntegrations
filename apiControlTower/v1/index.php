@@ -100,9 +100,6 @@ Flight::route('POST /postSchedule/', function () {
 Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
   
     header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-    header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-    
     $parts = explode(" ", $headerslink);
 
     $apiKey=$parts[0];
@@ -189,6 +186,10 @@ Flight::route('POST /postRooms/@headerslink', function ($headerslink) {
     }
 });
 
+
+Flight::route('POST /postRooms1/', function () {
+  echo "si";
+});
 
 
 
