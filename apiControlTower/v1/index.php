@@ -2108,39 +2108,19 @@ Flight::route('POST /putCurrencyStatus/', function () {
 
 
 
-Flight::route('POST /putPageCurrency/', function () {
+Flight::route('POST /putPageCurrency/@apk/@xapk', function ($apk,$xapk) {
+   
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
-    
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
-        // Leer los datos de la solicitud
-        
-            
-           
-       
-
-
-
-
-
-
-        // Acceder a los encabezados
-        $apiKey = $headers['Api-Key'];
-        $xApiKey = $headers['x-api-Key'];
-        
-
-
-
+    if (!empty($apk) && !empty($xapk)) {    
 
         $sub_domaincon=new model_domain();
         $sub_domain=$sub_domaincon->dom();
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
       
         $data = array(
-          'apiKey' =>$apiKey, 
-          'xApiKey' => $xApiKey
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
           
           );
       $curl = curl_init();
