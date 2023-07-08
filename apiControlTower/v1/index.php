@@ -1772,39 +1772,21 @@ $totalHours= $diferenciaHoras.":".$diferenciaMinutos.":".$diferenciaSegundos;
 
 
 
-Flight::route('POST /postPages/', function () {
+Flight::route('POST /postPages/@apk/@xapk', function ($apk,$xapk) {
+   
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
-    
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
+    if (!empty($apk) && !empty($xapk)) {    
         // Leer los datos de la solicitud
         
             
-           
-       
-
-
-
-
-
-
-        // Acceder a los encabezados
-        $apiKey = $headers['Api-Key'];
-        $xApiKey = $headers['x-api-Key'];
-        
-
-
-
-
         $sub_domaincon=new model_domain();
         $sub_domain=$sub_domaincon->dom();
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
       
         $data = array(
-          'apiKey' =>$apiKey, 
-          'xApiKey' => $xApiKey
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
           
           );
       $curl = curl_init();
@@ -1865,39 +1847,20 @@ Flight::route('POST /postPages/', function () {
 });
 
 
-Flight::route('POST /putPages/', function () {
+Flight::route('POST /putPages/@apk/@xapk', function ($apk,$xapk) {
+   
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
-    
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
-        // Leer los datos de la solicitud
-        
-            
-           
-       
-
-
-
-
-
-
+    if (!empty($apk) && !empty($xapk)) {    
         // Acceder a los encabezados
-        $apiKey = $headers['Api-Key'];
-        $xApiKey = $headers['x-api-Key'];
-        
-
-
-
-
+      
         $sub_domaincon=new model_domain();
         $sub_domain=$sub_domaincon->dom();
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
       
         $data = array(
-          'apiKey' =>$apiKey, 
-          'xApiKey' => $xApiKey
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
           
           );
       $curl = curl_init();
@@ -1956,39 +1919,19 @@ Flight::route('POST /putPages/', function () {
 
 
 
-Flight::route('POST /putPageStatus/', function () {
+Flight::route('POST /putPageStatus/@apk/@xapk', function ($apk,$xapk) {
+   
     header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
-    
     // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
-        // Leer los datos de la solicitud
-        
-            
-           
-       
-
-
-
-
-
-
-        // Acceder a los encabezados
-        $apiKey = $headers['Api-Key'];
-        $xApiKey = $headers['x-api-Key'];
-        
-
-
-
+    if (!empty($apk) && !empty($xapk)) {    
 
         $sub_domaincon=new model_domain();
         $sub_domain=$sub_domaincon->dom();
         $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
       
         $data = array(
-          'apiKey' =>$apiKey, 
-          'xApiKey' => $xApiKey
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
           
           );
       $curl = curl_init();
