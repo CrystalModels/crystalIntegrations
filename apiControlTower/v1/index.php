@@ -132,25 +132,20 @@ Flight::route('POST /postRooms/@apk/@xapk', function ($apk,$xapk) {
     $query2= mysqli_query($conectar,"INSERT rooms (roomId,name,comments) values ('$primeros_ocho','$name','$comments')");
                
     if ($query2) {
-        echo "true";
+        echo "true*¡Room agregado con exito!";
     } else {
-        echo "Error en la consulta: " . mysqli_error($conectar);
+        echo "false*¡Error en la consulta! " . mysqli_error($conectar);
     }        
  
-
-
-
-
-
 
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -215,20 +210,16 @@ Flight::route('POST /putRooms/@apk/@xapk', function ($apk,$xapk) {
     $query2= mysqli_query($conectar,"UPDATE rooms SET name='$name',comments='$comments' where roomId='$roomId'");
                
                          
- echo "true";
+ echo "true¡Room editado con exito!";
 
 
-
-
-           
-          
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -306,7 +297,7 @@ Flight::route('POST /putRoomsStatus/@apk/@xapk', function ($apk,$xapk) {
                
     }
                          
- echo "true";
+ echo "true*¡Estado editado con exito!";
 
 
 
@@ -316,11 +307,11 @@ Flight::route('POST /putRoomsStatus/@apk/@xapk', function ($apk,$xapk) {
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -1828,7 +1819,7 @@ Flight::route('POST /postPages/@apk/@xapk', function ($apk,$xapk) {
     $query2= mysqli_query($conectar,"INSERT generalPages (pageId,name,currency,urlPage,percentValue) values ('$primeros_ocho','$pageName','$currency','$urlPage','$percentValue')");
                
                          
- echo "true";
+ echo "true*¡Página agregada con exito!";
 
 
 
@@ -1838,11 +1829,11 @@ Flight::route('POST /postPages/@apk/@xapk', function ($apk,$xapk) {
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -1899,21 +1890,16 @@ Flight::route('POST /putPages/@apk/@xapk', function ($apk,$xapk) {
     $query2= mysqli_query($conectar,"UPDATE generalPages set name='$pageName',urlPage='$urlPage',percentValue='$percentValue' where pageId='$pageId'");
                
                          
- echo "true";
+ echo "true*¡Página editada con exito¡";
 
 
-
-
-
-           
-          
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -1983,21 +1969,16 @@ Flight::route('POST /putPageStatus/@apk/@xapk', function ($apk,$xapk) {
                
     }
                          
- echo "true";
+ echo "true*¡Estado editado con exito!";
 
 
-
-
-
-           
-          
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -2068,21 +2049,16 @@ Flight::route('POST /putCurrencyStatus/@apk/@xapk', function ($apk,$xapk) {
                
     }
                          
- echo "true";
+ echo "true*¡Estado editado con exito!";
 
 
-
-
-
-           
-          
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -2134,7 +2110,7 @@ Flight::route('POST /putPageCurrency/@apk/@xapk', function ($apk,$xapk) {
         $query2= mysqli_query($conectar,"UPDATE generalPages SET currency='$currency' where pageId='$pageId'");
     
                          
- echo "true";
+ echo "true*¡Moneda editada con exito!";
 
 
 
@@ -2144,11 +2120,11 @@ Flight::route('POST /putPageCurrency/@apk/@xapk', function ($apk,$xapk) {
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -2211,7 +2187,7 @@ Flight::route('POST /postCurrency/@apk/@xapk', function ($apk,$xapk) {
     $query2= mysqli_query($conectar,"INSERT generalCurrency (curId,name,currency,symbol,currentValue,comparative) values ('$primeros_ocho','$name','$currency','$symbol','$currentValue','$comparative')");
                
                          
- echo "true";
+ echo "true*¡Moneda agregada con exito!";
 
 
 
@@ -2221,11 +2197,11 @@ Flight::route('POST /postCurrency/@apk/@xapk', function ($apk,$xapk) {
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
@@ -2285,7 +2261,7 @@ Flight::route('POST /putCurrency/@apk/@xapk', function ($apk,$xapk) {
     $query2= mysqli_query($conectar,"UPDATE generalCurrency SET name='$name',symbol='$symbol',currentValue='$currentValue' where curId='$curId'");
                
                          
- echo "true";
+ echo "true*¡Moneda editada con exito!";
 
 
 
@@ -2295,11 +2271,11 @@ Flight::route('POST /putCurrency/@apk/@xapk', function ($apk,$xapk) {
           
            // echo json_encode($response1);
         } else {
-            echo 'Error: Autenticación fallida';
+            echo 'false*¡Autenticación fallida!';
              //echo json_encode($response1);
         }
     } else {
-        echo 'Error: Encabezados faltantes';
+        echo 'false*¡Encabezados faltantes!';
     }
 });
 
