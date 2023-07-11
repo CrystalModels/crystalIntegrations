@@ -845,7 +845,7 @@ Flight::route('GET /getAllRooms/', function () {
     }
 });
 
-Flight::route('GET /getMyschedule/@profileId', function ($profileId) {
+Flight::route('GET /getMySchedule/@profileId', function ($profileId) {
     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
     $headers = getallheaders();
