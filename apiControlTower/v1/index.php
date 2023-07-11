@@ -913,7 +913,7 @@ Flight::route('GET /getMySchedule/@profileId', function ($profileId) {
                             'thu' => $row['thu'],
                             'fri' => $row['fri'],
                             'sat' => $row['sat'],
-                            'sun' => $row['sut'],
+                            'sun' => $row['sun'],
                             'maxTime' => $row['maxHoursPerWeek'],
                             'minTime' => $row['minHoursPerWeek'],
                             'sTime' => $row['sTime']
