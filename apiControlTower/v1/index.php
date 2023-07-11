@@ -234,6 +234,76 @@ Flight::route('POST /putRooms/@apk/@xapk', function ($apk,$xapk) {
 
 
 
+Flight::route('POST /putMySchedule/@apk/@xapk', function ($apk,$xapk) {
+  
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+            
+        // Leer los datos de la solicitud
+        
+            
+
+
+
+
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+            'apiKey' =>$apk, 
+            'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+
+            $day= Flight::request()->data->day;
+            $value= Flight::request()->data->value;
+            $scheId= Flight::request()->data->scheId;
+
+    $conectar=conn();
+    
+    $query2= mysqli_query($conectar,"UPDATE generalSchedules SET '$day'='$value' where scheId='$scheId'");
+               
+                         
+ echo "true¡Horario editado con exito!";
+
+
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Autenticación fallida!';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'false*¡Encabezados faltantes!';
+    }
+});
+
+
+
 
 Flight::route('POST /putRoomsStatus/@apk/@xapk', function ($apk,$xapk) {
   
