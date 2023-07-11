@@ -57,8 +57,17 @@ Flight::route('POST /postSchedule/@apk/@xapk', function ($apk,$xapk) {
     $primeros_ocho = substr($myuuid, 0, 8);
     $myuuid2 = $gen_uuid->guidv4();
     $primeros_ocho2 = substr($myuuid2, 0, 8);
-    $query2= mysqli_query($conectar,"INSERT generalSchedules (schId,profileId) values ('$primeros_ocho','$profileId')");
-    $query2= mysqli_query($conectar,"INSERT logInfoModels (logId,profileId) values ('$primeros_ocho2','$profileId')");
+    
+for ($i = 1; $i <= 24; $i++) {
+    // Código a ejecutar en cada iteración
+    $x=0;
+$xTime=$x.":00";
+    $query2= mysqli_query($conectar,"INSERT generalSchedules (schId,profileId,sTime) values ('$primeros_ocho','$profileId','$xTime')");
+  $x++;
+}
+
+
+    // $query2= mysqli_query($conectar,"INSERT logInfoModels (logId,profileId) values ('$primeros_ocho2','$profileId')");
                
                          
  echo "true";
