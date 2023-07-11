@@ -286,7 +286,7 @@ Flight::route('POST /putMySchedule/@apk/@xapk', function ($apk,$xapk) {
 
     $conectar=conn();
     
-    $query2= mysqli_query($conectar,"UPDATE generalSchedules SET '$day'='$value' where scheId='$scheId'");
+    $query2= mysqli_query($conectar,"UPDATE generalSchedules SET $day='$value' where scheId='$scheId'");
                
                          
  echo "true*¡Horario editado con exito!";
