@@ -845,6 +845,115 @@ Flight::route('GET /getAllRooms/', function () {
     }
 });
 
+Flight::route('GET /getMyschedule/@profileId', function ($profileId) {
+    header("Access-Control-Allow-Origin: *");
+    // Leer los encabezados
+    $headers = getallheaders();
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
+        // Leer los datos de la solicitud
+       
+        // Acceder a los encabezados
+        $apiKey = $headers['Api-Key'];
+        $xApiKey = $headers['x-api-Key'];
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apiKey, 
+          'xApiKey' => $xApiKey
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+           
+
+
+
+           
+            $conectar=conn();
+            
+          
+            $query= mysqli_query($conectar,"SELECT schId,mon,tus,wen,thu,fri,sat,sun,maxHoursPerWeek,minHoursPerWeek,sTime FROM generalSchedules where profileId='$profileId'");
+               
+          
+                $values=[];
+          
+                while($row = $query->fetch_assoc())
+                {
+                        $value=[
+                            'schId' => $row['schId'],
+                            'mon' => $row['name'],
+                            'tus' => $row['comments'],
+                            'wen' => $row['profileId'],
+                            'thu' => $row['isActive'],
+                            'fri' => $row['status'],
+                            'sat' => $row['updatedAt'],
+                            'sun' => $row['updatedAt'],
+                            'maxTime' => $row['maxHoursPerWeek'],
+                            'minTime' => $row['minHoursPerWeek'],
+                            'sTime' => $row['sTime']
+                        ];
+                        
+                        array_push($values,$value);
+                        
+                }
+                $row=$query->fetch_assoc();
+                //echo json_encode($students) ;
+                echo json_encode(['sche'=>$values]);
+          
+               
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        } else {
+            echo 'Error: Autenticación fallida';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'Error: Encabezados faltantes';
+    }
+});
+
 
 
 Flight::route('GET /getOneRooms/@roomId', function ($roomId) {
