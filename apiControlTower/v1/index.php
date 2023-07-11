@@ -52,15 +52,15 @@ Flight::route('POST /postSchedule/@apk/@xapk', function ($apk,$xapk) {
 
     $conectar=conn();
     require_once '../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php';
-    $gen_uuid = new generateUuid();
-    $myuuid = $gen_uuid->guidv4();
-    $primeros_ocho = substr($myuuid, 0, 8);
-    $myuuid2 = $gen_uuid->guidv4();
-    $primeros_ocho2 = substr($myuuid2, 0, 8);
+   
+  
     
     $x = 0;
     for ($i = 1; $i <= 24; $i++) {
-        // Código a ejecutar en cada iteración
+        // Código a ejecutar en cada iteraci
+        $gen_uuid = new generateUuid();
+        $myuuid = $gen_uuid->guidv4();
+        $primeros_ocho = substr($myuuid, 0, 8);
         $xTime = $x . ":00";
         $query2 = mysqli_query($conectar, "INSERT INTO generalSchedules (schId, profileId, sTime) VALUES ('$primeros_ocho', '$profileId', '$xTime')");
         $x++;
