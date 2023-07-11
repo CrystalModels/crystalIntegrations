@@ -929,22 +929,6 @@ Flight::route('GET /getMyschedule/@profileId', function ($profileId) {
                
            
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         } else {
             echo 'Error: Autenticación fallida';
              //echo json_encode($response1);
