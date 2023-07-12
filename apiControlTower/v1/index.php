@@ -1075,7 +1075,7 @@ Flight::route('GET /getMyAlerts/@profileId', function ($profileId) {
                             'comments' => $row['comments'],
                             'profileId' => $row['profileId'],
                             'ownerId' => $row['ownerId'],
-                            'aletType' => $row['aletType'],
+                            'aletType' => $row['alertType'],
                             'alertResponse' => $row['alertResponse']
                         ];
                         
