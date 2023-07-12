@@ -1063,7 +1063,7 @@ Flight::route('GET /getMyAlerts/@profileId', function ($profileId) {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT COUNT(alertId) as alerts FROM generalAlerts where profileId='$profileId' and isActive=1");
+            $query= mysqli_query($conectar,"SELECT alertId,comments,profileId,ownerId,alertType,alertResponse FROM generalAlerts where profileId='$profileId' and isActive=1");
                
           
                 $values=[];
@@ -1071,7 +1071,12 @@ Flight::route('GET /getMyAlerts/@profileId', function ($profileId) {
                 while($row = $query->fetch_assoc())
                 {
                         $value=[
-                            'alerts' => $row['alerts']
+                            'alertId' => $row['alertId'],
+                            'comments' => $row['comments'],
+                            'profileId' => $row['profileId'],
+                            'ownerId' => $row['ownerId'],
+                            'aletType' => $row['aletType'],
+                            'alertResponse' => $row['alertResponse']
                         ];
                         
                         array_push($values,$value);
