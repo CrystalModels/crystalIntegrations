@@ -1152,7 +1152,7 @@ Flight::route('GET /getMyAlertsCounter/@profileId', function ($profileId) {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT COUNTER(alertid) as alertsCounter FROM generalAlerts where profileId='$profileId' and isActive=1");
+            $query= mysqli_query($conectar,"SELECT COUNT(alertid) as alertsCounter FROM generalAlerts where profileId='$profileId' and isActive=1");
                
           
                 $values=[];
