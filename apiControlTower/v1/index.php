@@ -285,7 +285,7 @@ Flight::route('POST /putMyRemindStatus/@apk/@xapk', function ($apk,$xapk) {
         if ($response1 == 'true' ) {
 
          
-            $remindId= Flight::request()->data->comments;
+            $remindId= Flight::request()->data->remindId;
           
             $profileId= Flight::request()->data->profileId;
           
