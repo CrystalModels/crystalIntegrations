@@ -1376,9 +1376,13 @@ Flight::route('GET /getMyReminds/@profileId', function ($profileId) {
 
            
             $conectar=conn();
+            date_default_timezone_set('America/Bogota');
             
+            $horaActual = date('H:i:s');
+            $fechaActual = date('Y-m-d');
+
           
-            $query= mysqli_query($conectar,"SELECT remindId,comments,profileId,ownerId,remindType,rDate,rTime FROM generalReminds where isActive=1 and remindType in ('GENERAL','$profileId')");
+            $query= mysqli_query($conectar,"SELECT remindId,comments,profileId,ownerId,remindType,rDate,rTime FROM generalReminds where isActive=1 and remindType in ('GENERAL','$profileId') and rDate>='$fechaActual' and rTime>='$horaActual'");
                
           
                 $values=[];
