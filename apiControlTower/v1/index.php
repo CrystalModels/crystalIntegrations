@@ -460,6 +460,84 @@ Flight::route('POST /putMyAlert/@apk/@xapk', function ($apk,$xapk) {
 });
 
 
+
+
+Flight::route('POST /postLogReport/@apk/@xapk', function ($apk,$xapk) {
+  
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+            
+        // Leer los datos de la solicitud
+        
+            
+
+
+
+
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+            'apiKey' =>$apk, 
+            'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+
+            $value= Flight::request()->data->value;
+            $profileId= Flight::request()->data->profileId;
+
+    $conectar=conn();
+    
+    require_once '../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php';
+    $gen_uuid = new generateUuid();
+    $myuuid = $gen_uuid->guidv4();
+    $primeros_ocho = substr($myuuid, 0, 8);
+    date_default_timezone_set('America/Bogota');
+$horaActual = date('H:i:s');
+$fechaActual = date('Y-m-d');
+
+$query2= mysqli_query($conectar,"INSERT INTO logReport (logId,profileId,type,timer,dater) VALUES ('$primeros_ocho','$profileId','$value','$horaActual','$fechaActual')");
+               
+                         
+echo "true*¡Alerta editada con exito!";
+   
+
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Autenticación fallida!';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'false*¡Encabezados faltantes!';
+    }
+});
+
+
 Flight::route('POST /postAlert/@apk/@xapk', function ($apk,$xapk) {
   
     header("Access-Control-Allow-Origin: *");
@@ -696,104 +774,6 @@ Flight::route('POST /putRoomsStatus/@apk/@xapk', function ($apk,$xapk) {
 
 
 
-
-
-Flight::route('POST /postLogReport/', function () {
-    header("Access-Control-Allow-Origin: *");
-    // Leer los encabezados
-    $headers = getallheaders();
-    
-    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
-    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
-        // Leer los datos de la solicitud
-        
-        // Acceder a los encabezados
-        $apiKey = $headers['Api-Key'];
-        $xApiKey = $headers['x-api-Key'];
-        
-
-
-
-
-        $sub_domaincon=new model_domain();
-        $sub_domain=$sub_domaincon->dom();
-        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
-      
-        $data = array(
-          'apiKey' =>$apiKey, 
-          'xApiKey' => $xApiKey
-          
-          );
-      $curl = curl_init();
-      
-      // Configurar las opciones de la sesión cURL
-      curl_setopt($curl, CURLOPT_URL, $url);
-      curl_setopt($curl, CURLOPT_POST, true);
-      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
-      
-      // Ejecutar la solicitud y obtener la respuesta
-      $response1 = curl_exec($curl);
-
-      
-
-
-      curl_close($curl);
-
-      
-
-        // Realizar acciones basadas en los valores de los encabezados
-
-
-        if ($response1 == 'true' ) {
-
-            $profileId= Flight::request()->data->profileId;
-            $type= Flight::request()->data->type;
-
-
-
-            date_default_timezone_set('America/Bogota');
-$timer=date('H:i:s');
-$dater = date('Y-m-d');
-/*
-$hora1 = new DateTime('10:00:00');
-$hora2 = new DateTime('13:30:00');
-
-$diferencia = $hora1->diff($hora2);
-
-$diferenciaHoras = $diferencia->format('%H');
-$diferenciaMinutos = $diferencia->format('%i');
-$diferenciaSegundos = $diferencia->format('%s');
-
-echo "Diferencia de horas: $diferenciaHoras horas, $diferenciaMinutos minutos, $diferenciaSegundos segundos";
-
-*/
-    $conectar=conn();
-    require_once '../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php';
-    $gen_uuid = new generateUuid();
-    $myuuid = $gen_uuid->guidv4();
-    $primeros_ocho = substr($myuuid, 0, 8);
-    $query2= mysqli_query($conectar,"INSERT logReport (logId,profileId,type,timer,dater) values ('$primeros_ocho','$profileId','$type','$timer','$dater')");
-             
-                         
- echo "true";
-
-
-
-
-
-           
-          
-           // echo json_encode($response1);
-        } else {
-            echo 'Error: Autenticación fallida';
-             //echo json_encode($response1);
-        }
-    } else {
-        echo 'Error: Encabezados faltantes';
-    }
-});
 
 
 
