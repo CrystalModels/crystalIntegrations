@@ -597,7 +597,7 @@ Flight::route('POST /assignPages/@apk/@xapk', function ($apk,$xapk) {
     $query1= mysqli_query($conectar,"SELECT profileId FROM pageAssignation where profileId='$profileId' and pageId='$pageId' and isActive=1 ");
     $nr=mysqli_num_rows($query1);
 
-    if($nr<1){
+    if($nr<=0){
 
 
         require('../../apiUsers/v1/model/modelSecurity/uuid/uuidd.php');
@@ -608,7 +608,7 @@ Flight::route('POST /assignPages/@apk/@xapk', function ($apk,$xapk) {
     $query2= mysqli_query($conectar,"INSERT INTO pageAssignation (transId,profileId,pageId) VALUES ('$primeros_ocho','$profileId','$pageId')");
                
                          
- echo "true*Página asignada con exito!";
+ echo "true*¡Página asignada con exito!";
 
     }else{
         echo 'false*¡Página asignada previamente!';
