@@ -89,6 +89,87 @@ Flight::route('POST /postSchedule/@apk/@xapk', function ($apk,$xapk) {
 });
 
 
+Flight::route('POST /postModelStatus/@apk/@xapk', function ($apk,$xapk) {
+   
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+        // Leer los datos de la solicitud
+        
+            
+           
+
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+
+            $profileId= Flight::request()->data->profileId;
+
+    $conectar=conn();
+    require_once '../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php';
+   
+  
+    
+        // Código a ejecutar en cada iteraci
+        $gen_uuid = new generateUuid();
+        $myuuid = $gen_uuid->guidv4();
+        $primeros_ocho = substr($myuuid, 0, 8);
+       
+        $query2 = mysqli_query($conectar, "INSERT INTO modelStatus (statusId, modelId) VALUES ('$primeros_ocho', '$profileId')");
+      
+
+
+    // $query2= mysqli_query($conectar,"INSERT logInfoModels (logId,profileId) values ('$primeros_ocho2','$profileId')");
+               
+                         
+ echo "true";
+
+
+
+
+
+           
+          
+           // echo json_encode($response1);
+        } else {
+            echo 'Error: Autenticación fallida';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'Error: Encabezados faltantes';
+    }
+});
+
+
 
 Flight::route('POST /postRooms/@apk/@xapk', function ($apk,$xapk) {
   
@@ -449,6 +530,90 @@ Flight::route('POST /putMyAlert/@apk/@xapk', function ($apk,$xapk) {
  echo "true*¡Alerta editada con exito!";
 
 
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Autenticación fallida!';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'false*¡Encabezados faltantes!';
+    }
+});
+
+
+
+Flight::route('POST /assignPages/@apk/@xapk', function ($apk,$xapk) {
+  
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+            
+        // Leer los datos de la solicitud
+        
+            
+
+
+
+
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+            'apiKey' =>$apk, 
+            'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+
+            $pageId= Flight::request()->data->pageId;
+            $profileId= Flight::request()->data->profileId;
+
+    $conectar=conn();
+    
+
+    $query1= mysqli_query($conectar,"SELECT profileId FROM pageAssignation where profileId='$profileId' and pageId='$pageId' and isActive=1 ");
+    $nr=mysqli_num_rows($query1);
+
+    if($nr<1){
+
+
+        require('../../apiUsers/v1/model/modelSecurity/uuid/uuidd.php');
+        $con=new generateUuid();
+            $myuuid = $con->guidv4();
+            $primeros_ocho = substr($myuuid, 0, 8);
+
+    $query2= mysqli_query($conectar,"INSERT INTO pageAssignation (transId,profileId,pageId) VALUES ('$primeros_ocho','$profileId','$pageId')");
+               
+                         
+ echo "true*Página asignada con exito!";
+
+    }else{
+        echo 'false*¡Página asignada previamente!';
+
+    }
            // echo json_encode($response1);
         } else {
             echo 'false*¡Autenticación fallida!';
