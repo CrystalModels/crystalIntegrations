@@ -600,7 +600,7 @@ Flight::route('POST /assignPages/@apk/@xapk', function ($apk,$xapk) {
     if($nr<=0){
 
 
-        require('../../apiUsers/v1/model/modelSecurity/uuid/uuidd.php');
+        require('../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php');
         $con=new generateUuid();
             $myuuid = $con->guidv4();
             $primeros_ocho = substr($myuuid, 0, 8);
