@@ -1579,7 +1579,7 @@ Flight::route('GET /getModelLog/@profileId', function ($profileId) {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT statusId,modelId,isConnected,isBreak,isLunch,isMeet,isIssue,isBroom FROM modelStatus where profileId='$profileId'");
+            $query= mysqli_query($conectar,"SELECT statusId,modelId,isConnected,isBreak,isLunch,isMeet,isIssue,isBroom FROM modelStatus where modelId='$profileId'");
                
           
                 $values=[];
