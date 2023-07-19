@@ -2603,7 +2603,7 @@ Flight::route('GET /getAllPagesModelsHis/@modelId/@sdate/@edate', function ($mod
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.pageId,tl.startTime,tl.endTime,tl.startDate,tl.endDate,tl.totalTime,tl.isActive,pl.name as pageName,pl.urlPage FROM transmissionRecord tl JOIN generalPages pl ON pl.pageId=tl.pageId  where  tl.profileId='$modelId' and tl.startDate>='$sdate' and tl.endDate<='$edate' ORDER BY tl.startDate,tl.endTime DESC ");
+            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.pageId,tl.startTime,tl.endTime,tl.startDate,tl.endDate,tl.totalTime,tl.isActive,pl.name as pageName,pl.urlPage FROM transmissionRecord tl JOIN generalPages pl ON pl.pageId=tl.pageId  where  tl.profileId='$modelId' and tl.startDate>='$sdate' and tl.endDate<='$edate' ORDER BY tl.startDate DESC ");
                
           
                 $values=[];
