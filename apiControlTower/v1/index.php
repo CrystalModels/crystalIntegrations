@@ -612,6 +612,85 @@ Flight::route('POST /putMyAlert/@apk/@xapk', function ($apk,$xapk) {
 });
 
 
+Flight::route('POST /connectModelPage/@apk/@xapk', function ($apk,$xapk) {
+  
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+            
+        // Leer los datos de la solicitud
+        
+            
+
+
+
+
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+            'apiKey' =>$apk, 
+            'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+
+            $transId= Flight::request()->data->transId;
+            $pageId= Flight::request()->data->pageId;
+            $profileId= Flight::request()->data->profileId;
+
+    $conectar=conn();
+    // Establecer la zona horaria a Colombia
+date_default_timezone_set('America/Bogota');
+
+// Obtener la hora actual en Colombia
+$horaActual = new DateTime();
+$horaActual->setTimezone(new DateTimeZone('America/Bogota'));
+
+// Imprimir la hora actual en Colombia
+$hora1= $horaActual->format('H:i:s');
+$fechaActual = date('Y-m-d');
+    $query2= mysqli_query($conectar,"UPDATE pageAssignation SET valueNow='true' where profileId='$profileId' and transId='$transId' and pageId='$pageId'");
+    $query2= mysqli_query($conectar,"INSERT INTO transmissionRecord (transId,profileId,pageId,startTime,startDate) values ('$transId','$profileId','$pageId','$hora1','$fechaActual')");
+              
+                         
+ echo "true*¡Modelo Conecta@ con exito!";
+
+
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Autenticación fallida!';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'false*¡Encabezados faltantes!';
+    }
+});
+
+
 
 Flight::route('POST /assignPages/@apk/@xapk', function ($apk,$xapk) {
   
