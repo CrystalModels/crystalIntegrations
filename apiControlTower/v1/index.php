@@ -2550,7 +2550,7 @@ Flight::route('GET /getAllPagesModelsNot/@modelId', function ($modelId) {
 
 
 
-Flight::route('GET /getAllPagesModelsHis/@modelId/@sdate', function ($modelId,$sdate) {
+Flight::route('GET /getAllPagesModelsHis/@modelId/@sdate/@edate', function ($modelId,$sdate,$edate) {
     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
     $headers = getallheaders();
@@ -2603,7 +2603,7 @@ Flight::route('GET /getAllPagesModelsHis/@modelId/@sdate', function ($modelId,$s
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.pageId,tl.startTime,tl.endTime,tl.startDate,tl.endDate,tl.totalTime,tl.isActive,pl.name as pageName,pl.urlPage FROM transmissionRecord tl JOIN generalPages pl ON pl.pageId=tl.pageId  where tl.profileId='$modelId' and startDate>='$sdate'");
+            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.pageId,tl.startTime,tl.endTime,tl.startDate,tl.endDate,tl.totalTime,tl.isActive,pl.name as pageName,pl.urlPage FROM transmissionRecord tl JOIN generalPages pl ON pl.pageId=tl.pageId  where  tl.profileId='$modelId' and tl.startDate>='$sdate' and tl.endDate<='$edate'");
                
           
                 $values=[];
