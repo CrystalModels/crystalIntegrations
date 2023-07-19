@@ -2154,12 +2154,30 @@ Flight::route('GET /getAllPagesModels/@modelId', function ($modelId) {
             
           
             $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.status,tl.isActive,tl.pageId,tl.valueNow,pl.name as pageName,pl.urlPage,tr.startTime,tr.endTime,tr.startDate,tr.transId as trId,tr.endDate, tr.totalTime FROM pageAssignation tl JOIN generalPages pl ON pl.pageId=tl.pageId JOIN transmissionRecord tr ON tr.transId=tl.transId where tl.profileId='$modelId' and tl.valueNow='true' and tr.isActive=1 ");
-               
-          
+               // Establecer la zona horaria a Colombia
+date_default_timezone_set('America/Bogota');
+
+// Obtener la hora actual en Colombia
+$horaActual = new DateTime();
+$horaActual->setTimezone(new DateTimeZone('America/Bogota'));
+
+// Imprimir la hora actual en Colombia
+
+
+           
                 $values=[];
           
                 while($row = $query->fetch_assoc())
                 {
+
+                    $hora1 = new DateTime($row['startTime']);
+                    
+                    $hnow= $horaActual->format('H:i:s');
+                    $hora2 = new DateTime($hnow);
+                    $diferencia = $hora2->diff($hora1);
+                    
+                 //   echo $diferencia->format('%H:%I:%S'); // Imprime la diferencia en formato horas:minutos:segundos
+                    
                         $value=[
                             'transId' => $row['transId'],
                             'modelId' => $row['profileId'],
@@ -2174,7 +2192,7 @@ Flight::route('GET /getAllPagesModels/@modelId', function ($modelId) {
                             'startDate' => $row['startDate'],
                             'endDate' => $row['endDate'],
                             'trId' => $row['trId'],
-                            'totalTime' => $row['totalTime']
+                            'totalTime' => $diferencia->format('%H:%I:%S')
                         ];
                         
                         array_push($values,$value);
