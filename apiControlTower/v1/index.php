@@ -2354,6 +2354,117 @@ Flight::route('GET /getAllPagesModelsNot/@modelId', function ($modelId) {
 
 
 
+Flight::route('GET /getAllPagesModelsHis/@modelId/@sdate', function ($modelId,$sdate) {
+    header("Access-Control-Allow-Origin: *");
+    // Leer los encabezados
+    $headers = getallheaders();
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
+        // Leer los datos de la solicitud
+       
+        // Acceder a los encabezados
+        $apiKey = $headers['Api-Key'];
+        $xApiKey = $headers['x-api-Key'];
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apiKey, 
+          'xApiKey' => $xApiKey
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+           
+
+
+
+           
+            $conectar=conn();
+            
+          
+            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.pageId,tl.startTime,tl.endTime,tl.startDate,tl.endDate,tl.totalTime,tl.isActive,pl.name as pageName,pl.urlPage FROM transmissionRecord tl JOIN generalPages pl ON pl.pageId=tl.pageId  where tl.profileId='$modelId' and startDate>='$sdate'");
+               
+          
+                $values=[];
+          
+                while($row = $query->fetch_assoc())
+                {
+                        $value=[
+                            'transId' => $row['transId'],
+                            'modelId' => $row['profileId'],
+                            'isActive' => $row['isActive'],
+                            'pageId' => $row['pageId'],
+                            'pageName' => $row['pageName'],
+                            'urlPage' => $row['urlPage'],
+                            'startTime' => $row['startTime'],
+                            'endTime' => $row['endTime'],
+                            'startDate' => $row['startDate'],
+                            'endDate' => $row['endDate'],
+                            'totalTime' => $row['totalTime']
+                        ];
+                        
+                        array_push($values,$value);
+                        
+                }
+                $row=$query->fetch_assoc();
+                //echo json_encode($students) ;
+                echo json_encode(['pages'=>$values]);
+          
+               
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        } else {
+            echo 'Error: Autenticación fallida';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'Error: Encabezados faltantes';
+    }
+});
+
+
+
 Flight::route('GET /getOnePages/@pageId', function ($pageId) {
     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
