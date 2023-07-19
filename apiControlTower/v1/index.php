@@ -673,7 +673,7 @@ $horaActual->setTimezone(new DateTimeZone('America/Bogota'));
 // Imprimir la hora actual en Colombia
 $hora1= $horaActual->format('H:i:s');
 $fechaActual = date('Y-m-d');
-    $query2= mysqli_query($conectar,"UPDATE pageAssignation SET valueNow='true' where profileId='$profileId' and transId='$transId' and pageId='$pageId'");
+    $query2= mysqli_query($conectar,"UPDATE pageAssignation SET valueNow='true' where profileId='$profileId' and transId='$transId'");
     $query2= mysqli_query($conectar,"INSERT INTO transmissionRecord (transId,profileId,pageId,startTime,startDate) values ('$transId','$profileId','$pageId','$hora1','$fechaActual')");
               
                          
