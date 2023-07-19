@@ -2153,7 +2153,7 @@ Flight::route('GET /getAllPagesModels/@modelId', function ($modelId) {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.status,tl.isActive,tl.pageId,tl.valueNow,pl.name as pageName,pl.urlPage FROM pageAssignation tl JOIN generalPages pl ON pl.pageId=tl.pageId where tl.profileId='$modelId' and tl.valueNow='true'");
+            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.status,tl.isActive,tl.pageId,tl.valueNow,pl.name as pageName,pl.urlPage,tr.startTime,tr.endTime,tr.startDate,tr.transId as trId,tr.endDate FROM pageAssignation tl JOIN generalPages pl ON pl.pageId=tl.pageId JOIN transmissionRecord tr ON tr.pageId=pl.pageId where tl.profileId='$modelId' and tl.valueNow='false' and tr.isActive=1 ");
                
           
                 $values=[];
@@ -2168,7 +2168,12 @@ Flight::route('GET /getAllPagesModels/@modelId', function ($modelId) {
                             'pageId' => $row['pageId'],
                             'valueNow' => $row['valueNow'],
                             'pageName' => $row['pageName'],
-                            'urlPage' => $row['urlPage']
+                            'urlPage' => $row['urlPage'],
+                            'startTime' => $row['startTime'],
+                            'endTime' => $row['endTime'],
+                            'startDate' => $row['startDate'],
+                            'endDate' => $row['endDate'],
+                            'trId' => $row['trId']
                         ];
                         
                         array_push($values,$value);
