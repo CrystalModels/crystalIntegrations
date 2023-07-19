@@ -2192,7 +2192,7 @@ $horaActual->setTimezone(new DateTimeZone('America/Bogota'));
                             'startDate' => $row['startDate'],
                             'endDate' => $row['endDate'],
                             'trId' => $row['trId'],
-                            'totalTime' => $row['totalTime']
+                            'totalTime' => $diferencia
                         ];
                         
                         array_push($values,$value);
