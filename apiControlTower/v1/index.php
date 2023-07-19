@@ -2176,7 +2176,7 @@ $horaActual->setTimezone(new DateTimeZone('America/Bogota'));
                     $hora2 = new DateTime($hnow);
                     $diferencia = $hora2->diff($hora1);
                     
-                 //   echo $diferencia->format('%H:%I:%S'); // Imprime la diferencia en formato horas:minutos:segundos
+                    echo $diferencia->format('%H:%I:%S'); // Imprime la diferencia en formato horas:minutos:segundos
                     
                         $value=[
                             'transId' => $row['transId'],
@@ -2192,7 +2192,7 @@ $horaActual->setTimezone(new DateTimeZone('America/Bogota'));
                             'startDate' => $row['startDate'],
                             'endDate' => $row['endDate'],
                             'trId' => $row['trId'],
-                            'totalTime' => $diferencia
+                            'totalTime' => $row['totalTime']
                         ];
                         
                         array_push($values,$value);
