@@ -673,10 +673,127 @@ $horaActual->setTimezone(new DateTimeZone('America/Bogota'));
 // Imprimir la hora actual en Colombia
 $hora1= $horaActual->format('H:i:s');
 $fechaActual = date('Y-m-d');
-    $query2= mysqli_query($conectar,"UPDATE pageAssignation SET valueNow='true' where profileId='$profileId' and transId='$transId'");
+    $query2= mysqli_query($conectar,"UPDATE pageAssignation SET valueNow='true' where profileId='$profileId' and transId='$transId' and pageId='$pageId'");
     $query2= mysqli_query($conectar,"INSERT INTO transmissionRecord (transId,profileId,pageId,startTime,startDate) values ('$transId','$profileId','$pageId','$hora1','$fechaActual')");
               
                          
+ echo "true*¡Modelo Conecta@ con exito!";
+
+
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Autenticación fallida!';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'false*¡Encabezados faltantes!';
+    }
+});
+
+Flight::route('POST /connectModelPageNot/@apk/@xapk', function ($apk,$xapk) {
+  
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+            
+        // Leer los datos de la solicitud
+        
+            
+
+
+
+
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+            'apiKey' =>$apk, 
+            'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+
+            $transId= Flight::request()->data->transId;
+            $pageId= Flight::request()->data->pageId;
+            $profileId= Flight::request()->data->profileId;
+
+    $conectar=conn();
+
+
+
+
+    $query= mysqli_query($conectar,"SELECT startTime from transmissionRecord where profileId='$profileId' and transId='$transId' and isActive=1");
+    // Establecer la zona horaria a Colombia
+date_default_timezone_set('America/Bogota');
+
+// Obtener la hora actual en Colombia
+$horaActual = new DateTime();
+$horaActual->setTimezone(new DateTimeZone('America/Bogota'));
+date_default_timezone_set('America/Bogota');
+
+// Obtener la hora actual en Colombia
+$timer=date('H:i:s');
+//$horaActual->setTimezone(new DateTimeZone('America/Bogota'));
+// Imprimir la hora actual en Colombia
+
+
+
+     $values=[];
+
+     while($row = $query->fetch_assoc())
+     {
+
+        // $hora1 = new DateTime($row['startTime']);
+         $fecha = DateTime::createFromFormat('H:i:s', $row['startTime']);
+         $fecha2 = DateTime::createFromFormat('H:i:s', $timer);
+         $fechaActual = date('Y-m-d');
+//$hora2 = $timer;
+
+$diferencia = $fecha->diff($fecha2);
+
+$diferenciaHoras = $diferencia->format('%H');
+$diferenciaMinutos = $diferencia->format('%i');
+$diferenciaSegundos = $diferencia->format('%s');
+
+$totalHours= $diferenciaHoras.":".$diferenciaMinutos.":".$diferenciaSegundos;
+
+
+$query2= mysqli_query($conectar,"UPDATE pageAssignation SET valueNow='false' where profileId='$profileId' and transId='$transId'");
+    
+    
+$query2= mysqli_query($conectar,"UPDATE transmissionRecord SET isActive=0,endTime='$timer',endDate='$fechaActual',totalTime='$totalHours' where profileId='$profileId' and transId='$transId' and isActive=1 and pageId='$pageId'");
+
+
+     
+            
+
+     }
+
+
+            
  echo "true*¡Modelo Conecta@ con exito!";
 
 
