@@ -2160,7 +2160,11 @@ date_default_timezone_set('America/Bogota');
 // Obtener la hora actual en Colombia
 $horaActual = new DateTime();
 $horaActual->setTimezone(new DateTimeZone('America/Bogota'));
+date_default_timezone_set('America/Bogota');
 
+// Obtener la hora actual en Colombia
+$timer=date('H:i:s');
+//$horaActual->setTimezone(new DateTimeZone('America/Bogota'));
 // Imprimir la hora actual en Colombia
 
 
@@ -2170,13 +2174,22 @@ $horaActual->setTimezone(new DateTimeZone('America/Bogota'));
                 while($row = $query->fetch_assoc())
                 {
 
-                    $hora1 = new DateTime($row['startTime']);
+                   // $hora1 = new DateTime($row['startTime']);
+                    $fecha = DateTime::createFromFormat('H:i:s', $row['startTime']);
+                    $fecha2 = DateTime::createFromFormat('H:i:s', $timer);
+     
+     //$hora2 = $timer;
+     
+     $diferencia = $fecha->diff($fecha2);
+     
+     $diferenciaHoras = $diferencia->format('%H');
+     $diferenciaMinutos = $diferencia->format('%i');
+     $diferenciaSegundos = $diferencia->format('%s');
+     
+     $totalHours= $diferenciaHoras.":".$diferenciaMinutos.":".$diferenciaSegundos;
+     
                     
-                    $hnow= $horaActual->format('H:i:s');
-                    $hora2 = new DateTime($hnow);
-                    $diferencia = $hora2->diff($hora1);
-                    
-                    echo $diferencia->format('%H:%I:%S'); // Imprime la diferencia en formato horas:minutos:segundos
+                   // echo $diferencia->format('%H:%I:%S'); // Imprime la diferencia en formato horas:minutos:segundos
                     
                         $value=[
                             'transId' => $row['transId'],
@@ -2192,7 +2205,7 @@ $horaActual->setTimezone(new DateTimeZone('America/Bogota'));
                             'startDate' => $row['startDate'],
                             'endDate' => $row['endDate'],
                             'trId' => $row['trId'],
-                            'totalTime' => $diferencia
+                            'totalTime' => $totalHours
                         ];
                         
                         array_push($values,$value);
