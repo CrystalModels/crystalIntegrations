@@ -767,11 +767,14 @@ $timer=date('H:i:s');
      {
 
         // $hora1 = new DateTime($row['startTime']);
-         $fecha = DateTime::createFromFormat('H:i:s', $row['startTime']);
-         $fecha2 = DateTime::createFromFormat('H:i:s', $timer);
-         $fechaActual = date('Y-m-d');
-//$hora2 = $timer;
+        $starttime= $row['startTime'];
+        $dater = date('Y-m-d');
+        $timer=date('H:i:s');
+        $hora1 = $starttime;
+        $fecha = DateTime::createFromFormat('H:i:s', $hora1);
+        $fecha2 = DateTime::createFromFormat('H:i:s', $timer);
 
+$hora2 = $timer;
 
 $diferencia = $fecha->diff($fecha2);
 
@@ -785,7 +788,7 @@ $diferenciaSegundos = $diferencia->format('%s');
 
 
 // Horas en formato HH:mm
-$horaInicio = $fecha;
+$horaInicio = $starttime;
 $horaFin = $timer;
 
 // Convertir horas a minutos
@@ -794,7 +797,7 @@ $fin = strtotime($horaFin);
 
 // Si la hora final es anterior a la hora inicial, sumar 24 horas al final para obtener la diferencia correcta
 if ($fin < $inicio) {
-    $fin += 86400; // 24 horas en segundos (24 * 60 * 60)
+$fin += 86400; // 24 horas en segundos (24 * 60 * 60)
 }
 
 // Calcular la diferencia en minutos
@@ -804,7 +807,7 @@ $diferenciaMinutos = ($fin - $inicio) / 60;
 $horasTranscurridas = floor($diferenciaMinutos / 60);
 $minutosTranscurridos = $diferenciaMinutos % 60;
 
-
+$fechaActual = date('Y-m-d');
 $totalHours= $horasTranscurridas.":".$minutosTranscurridos.":".$diferenciaSegundos;
 
 
