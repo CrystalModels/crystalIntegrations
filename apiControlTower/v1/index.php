@@ -772,13 +772,40 @@ $timer=date('H:i:s');
          $fechaActual = date('Y-m-d');
 //$hora2 = $timer;
 
+
 $diferencia = $fecha->diff($fecha2);
 
-$diferenciaHoras = $diferencia->format('%H');
-$diferenciaMinutos = $diferencia->format('%i');
+//$diferenciaHoras = $diferencia->format('%H');
+//$diferenciaMinutos = $diferencia->format('%i');
 $diferenciaSegundos = $diferencia->format('%s');
 
-$totalHours= $diferenciaHoras.":".$diferenciaMinutos.":".$diferenciaSegundos;
+//$totalHours= $diferenciaHoras.":".$diferenciaMinutos.":".$diferenciaSegundos;
+
+
+
+
+// Horas en formato HH:mm
+$horaInicio = $fecha;
+$horaFin = $timer;
+
+// Convertir horas a minutos
+$inicio = strtotime($horaInicio);
+$fin = strtotime($horaFin);
+
+// Si la hora final es anterior a la hora inicial, sumar 24 horas al final para obtener la diferencia correcta
+if ($fin < $inicio) {
+    $fin += 86400; // 24 horas en segundos (24 * 60 * 60)
+}
+
+// Calcular la diferencia en minutos
+$diferenciaMinutos = ($fin - $inicio) / 60;
+
+// Calcular las horas y minutos transcurridos
+$horasTranscurridas = floor($diferenciaMinutos / 60);
+$minutosTranscurridos = $diferenciaMinutos % 60;
+
+
+$totalHours= $horasTranscurridas.":".$minutosTranscurridos.":".$diferenciaSegundos;
 
 
 $query2= mysqli_query($conectar,"UPDATE pageAssignation SET valueNow='false' where profileId='$profileId' and transId='$transId'");
@@ -3305,7 +3332,7 @@ $dater = date('Y-m-d');
     $query2= mysqli_query($conectar,"INSERT INTO  transmissionRecord (transId,profileId,pageId,startTime,startDate,parentId) values ('$primeros_ocho2','$profileId','$registro','$timer','$dater','$primeros_ocho')");
     
 }
-        echo "true";
+echo "true*¡Transmisión finalizada con exito!";
     }   
     if($value=="nottransmission"){
 
@@ -3365,7 +3392,7 @@ $totalHours= $horasTranscurridas.":".$minutosTranscurridos.":".$diferenciaSegund
 
                
                
-                echo "true";
+                echo "true*¡Transmisión finalizada con exito!";
 
 
       
