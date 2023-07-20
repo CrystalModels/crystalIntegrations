@@ -3332,6 +3332,32 @@ $diferenciaSegundos = $diferencia->format('%s');
 
 $totalHours= $diferenciaHoras.":".$diferenciaMinutos.":".$diferenciaSegundos;
 
+
+
+
+// Horas en formato HH:mm
+$horaInicio = $starttime;
+$horaFin = $timer;
+
+// Convertir horas a minutos
+$inicio = strtotime($horaInicio);
+$fin = strtotime($horaFin);
+
+// Si la hora final es anterior a la hora inicial, sumar 24 horas al final para obtener la diferencia correcta
+if ($fin < $inicio) {
+    $fin += 86400; // 24 horas en segundos (24 * 60 * 60)
+}
+
+// Calcular la diferencia en minutos
+$diferenciaMinutos = ($fin - $inicio) / 60;
+
+// Calcular las horas y minutos transcurridos
+$horasTranscurridas = floor($diferenciaMinutos / 60);
+$minutosTranscurridos = $diferenciaMinutos % 60;
+
+
+$totalHours= $horasTranscurridas.":".$minutosTranscurridos.":".$diferenciaSegundos;
+
                $query2= mysqli_query($conectar,"DELETE FROM transmissionList where transId='$transId'");
                $query2= mysqli_query($conectar,"UPDATE transmissionRecord set endTime='$timer', endDate='$dater',totalTime='$totalHours' where parentId='$transId'");
              
