@@ -3326,11 +3326,11 @@ $hora2 = $timer;
 
 $diferencia = $fecha->diff($fecha2);
 
-$diferenciaHoras = $diferencia->format('%H');
-$diferenciaMinutos = $diferencia->format('%i');
+//$diferenciaHoras = $diferencia->format('%H');
+//$diferenciaMinutos = $diferencia->format('%i');
 $diferenciaSegundos = $diferencia->format('%s');
 
-$totalHours= $diferenciaHoras.":".$diferenciaMinutos.":".$diferenciaSegundos;
+//$totalHours= $diferenciaHoras.":".$diferenciaMinutos.":".$diferenciaSegundos;
 
 
 
