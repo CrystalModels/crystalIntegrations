@@ -1061,6 +1061,10 @@ Flight::route('POST /assignRoomsByModel/@apk/@xapk', function ($apk,$xapk) {
     $conectar=conn();
     
 
+    $query1= mysqli_query($conectar,"SELECT profileId FROM roomAssignation where profileId='$profileId' and roomId='$roomId' and isActive=1 ");
+    $nr=mysqli_num_rows($query1);
+
+    if($nr>=1){
 
     if($profileId=="del"){
         $query2= mysqli_query($conectar,"UPDATE rooms set profileId='0' where roomId='$roomId' and status=1 and isActive=1 and profileId!='0'");
@@ -1089,7 +1093,10 @@ Flight::route('POST /assignRoomsByModel/@apk/@xapk', function ($apk,$xapk) {
 
         
     }
-    
+}else{
+
+    echo 'false*¡Room no asignado!';
+}
            // echo json_encode($response1);
         } else {
             echo 'false*¡Autenticación fallida!';
