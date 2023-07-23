@@ -1070,7 +1070,7 @@ Flight::route('POST /assignRoomsByModel/@apk/@xapk', function ($apk,$xapk) {
  echo "true*¡Room asignado con exito!";
 
     }else{
-        echo 'false*¡Room asignado previamente!';
+        echo 'false*¡Room asignado previamente123!';
 
     }
            // echo json_encode($response1);
