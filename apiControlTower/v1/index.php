@@ -1903,7 +1903,7 @@ Flight::route('GET /getAllRoomsTrue/', function () {
                 {
                         $value=[
                             'roomId' => $row['roomId'],
-                            'name' => $row['name'],
+                            'roomName' => $row['name'],
                             'comments' => $row['comments'],
                             'profileId' => $row['profileId'],
                             'isActive' => $row['isActive'],
