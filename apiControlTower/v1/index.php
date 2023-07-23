@@ -1054,25 +1054,42 @@ Flight::route('POST /assignRoomsByModel/@apk/@xapk', function ($apk,$xapk) {
             $roomId= Flight::request()->data->roomId;
             $profileId= Flight::request()->data->profileId;
 
+
+
+
+
     $conectar=conn();
     
 
-    $query1= mysqli_query($conectar,"SELECT profileId FROM rooms where profileId='$profileId' and roomId='$roomId' and isActive=1 ");
-    $nr=mysqli_num_rows($query1);
 
-    if($nr<=0){
-
-
-
-    $query2= mysqli_query($conectar,"UPDATE rooms set profileId='$profileId' where profileId='0' and status=1 and isActive=1 and roomId='$roomId'");
-               
-                         
- echo "true*¡Room asignado con exito!";
+    if($profileId=="del"){
+        $query2= mysqli_query($conectar,"UPDATE rooms set profileId='0' where roomId='$roomId' and status=1 and isActive=1 and profileId!='0'");
+                   
+                             
+        echo "true*¡Room liberado con exito!";
 
     }else{
-        echo 'false*¡Room asignado previamente123!'.$profileId;
 
+        $query1= mysqli_query($conectar,"SELECT profileId FROM rooms where profileId='$profileId' and roomId='$roomId' and isActive=1 ");
+        $nr=mysqli_num_rows($query1);
+    
+        if($nr<=0){
+    
+    
+    
+        $query2= mysqli_query($conectar,"UPDATE rooms set profileId='$profileId' where profileId='0' and status=1 and isActive=1 and roomId='$roomId'");
+                   
+                             
+     echo "true*¡Room asignado con exito!";
+    
+        }else{
+            echo 'false*¡Room asignado previamente!';
+    
+        }
+
+        
     }
+    
            // echo json_encode($response1);
         } else {
             echo 'false*¡Autenticación fallida!';
