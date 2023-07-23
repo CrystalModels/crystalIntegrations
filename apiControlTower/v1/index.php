@@ -1057,7 +1057,7 @@ Flight::route('POST /assignRoomsByModel/@apk/@xapk', function ($apk,$xapk) {
     $conectar=conn();
     
 
-    $query1= mysqli_query($conectar,"SELECT profileId FROM roomAssignation where profileId='$profileId' and roomId='$roomId' and isActive=1 ");
+    $query1= mysqli_query($conectar,"SELECT profileId FROM rooms where profileId='$profileId' and roomId='$roomId' and isActive=1 ");
     $nr=mysqli_num_rows($query1);
 
     if($nr<=0){
