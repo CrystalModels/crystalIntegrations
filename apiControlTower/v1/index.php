@@ -4458,7 +4458,6 @@ Flight::route('GET /getAllTransmissionList/', function () {
 });
 
 
-
 Flight::route('GET /getVersionList/', function () {
     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
@@ -4522,6 +4521,8 @@ $ver1= $ver->ver_change();
         echo 'Error: Encabezados faltantes';
     }
 });
+
+
 
 
 
