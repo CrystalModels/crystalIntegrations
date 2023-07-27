@@ -4647,7 +4647,7 @@ Flight::route('POST /putCuttingStatus/@apk/@xapk', function ($apk,$xapk) {
         if ($response1 == 'true' ) {
             date_default_timezone_set('America/Bogota');
          
-            $cutId= Flight::request()->data->comments;
+            $cutId= Flight::request()->data->cutId;
             $value= Flight::request()->data->value;
             
             $timer=date('H:i:s');
