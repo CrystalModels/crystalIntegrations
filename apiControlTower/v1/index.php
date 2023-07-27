@@ -4533,5 +4533,241 @@ $ver1= $ver->ver_change();
 
 
 
+Flight::route('POST /postCutting/@apk/@xapk', function ($apk,$xapk) {
+  
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+            
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+
+         
+            $cutName= Flight::request()->data->cutName;
+            $startDate= Flight::request()->data->startDate;
+            $endDate= Flight::request()->data->endDate;
+            
+
+    $conectar=conn();
+    require_once '../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php';
+    $gen_uuid = new generateUuid();
+    $myuuid = $gen_uuid->guidv4();
+    $primeros_ocho = substr($myuuid, 0, 8);
+    $query2= mysqli_query($conectar,"INSERT INTO generalCutting (cutId,cutName,startDate,endDate) values ('$primeros_ocho','$cutName','$startDate','$endDate')");
+               
+    if ($query2) {
+        echo "true*¡Corte agregado con exito!";
+    } else {
+        echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+    }        
+ 
+
+          
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Autenticación fallida!';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'false*¡Encabezados faltantes!';
+    }
+});
+
+
+
+Flight::route('POST /putCuttingStatus/@apk/@xapk', function ($apk,$xapk) {
+  
+    header("Access-Control-Allow-Origin: *");
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (!empty($apk) && !empty($xapk)) {    
+            
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apk, 
+          'xApiKey' => $xapk
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+            date_default_timezone_set('America/Bogota');
+         
+            $cutId= Flight::request()->data->comments;
+            $value= Flight::request()->data->value;
+            
+            $timer=date('H:i:s');
+$dater = date('Y-m-d');
+
+    $conectar=conn();
+    
+
+if($value=="open"){
+
+
+    $query2= mysqli_query($conectar,"UPDATE generalCutting SET isActive=1,realStartDate='$dater' where cutId='$cutId'");
+    if ($query2) {
+        echo "true*¡Corte activado con exito!";
+    } else {
+        echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+    }   
+}
+
+
+if($value=="close"){
+    $query2= mysqli_query($conectar,"UPDATE generalCutting SET isActive=0 where cutId='$cutId'");
+    if ($query2) {
+        echo "true*¡Corte activado con exito!";
+    } else {
+        echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+    }   
+
+}
+if($value=="stop"){
+
+    $query1= mysqli_query($conectar,"SELECT realStartDate FROM generalCutting where cutId='$cutId'");
+               
+          
+    if ($query1) {
+        while ($row = $query1->fetch_assoc()) {
+        
+         
+            $startdate= $row['realStartDate'];
+
+            $fechaInicioObj = new DateTime($startdate);
+$fechaFinObj = new DateTime($dater);
+
+// Calcular la diferencia entre las fechas
+$diferencia = $fechaInicioObj->diff($fechaFinObj);
+
+// Obtener el número de días de la diferencia
+$numDias = $diferencia->days;
+            $query2= mysqli_query($conectar,"UPDATE generalCutting SET isActive=0,status=0,realTotalDays='$numDias',realEndDate='$dater' where cutId='$cutId'");
+   
+        }
+
+    if ($query2) {
+
+
+
+
+
+
+
+        $query1= mysqli_query($conectar,"SELECT startDate,endDate FROM generalCutting where cutId='$cutId'");
+               
+          
+        if ($query1) {
+            while ($row = $query1->fetch_assoc()) {
+            
+             
+                $startdate= $row['startDate'];
+                $enddate= $row['endDate'];
+    
+                $fechaInicioObj = new DateTime($startdate);
+    $fechaFinObj = new DateTime($enddate);
+    
+    // Calcular la diferencia entre las fechas
+    $diferencia = $fechaInicioObj->diff($fechaFinObj);
+    
+    // Obtener el número de días de la diferencia
+    $numDias = $diferencia->days;
+                $query2= mysqli_query($conectar,"UPDATE generalCutting SET totalDays='$numDias' where cutId='$cutId'");
+       
+            }
+    
+        if ($query2) {
+    
+            
+            echo "true*¡Corte activado con exito!";
+    
+        } else {
+            echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+        }   
+
+
+
+
+
+
+
+        
+
+    } else {
+        echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+    }   
+    }
+}
+
+        
+ 
+
+          
+           // echo json_encode($response1);
+        } else {
+            echo 'false*¡Autenticación fallida!';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'false*¡Encabezados faltantes!';
+    }
+}
+});
+
+
 
 Flight::start();
