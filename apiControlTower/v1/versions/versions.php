@@ -7,6 +7,7 @@ function ver_change() {
     $values=[];
 
     $value=[
+        '1.2.0-Beta' => '2023-07-27-inserción de datos',
         '1.0.1-Beta' => '2023-07-26-sistema de versionamiento',
         '1.0.0-Beta' => '2023-07-25-sistema base'
         

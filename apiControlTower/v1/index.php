@@ -673,9 +673,15 @@ $horaActual->setTimezone(new DateTimeZone('America/Bogota'));
 // Imprimir la hora actual en Colombia
 $hora1= $horaActual->format('H:i:s');
 $fechaActual = date('Y-m-d');
+
+require_once '../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php';
+$gen_uuid = new generateUuid();
+$myuuid = $gen_uuid->guidv4();
+$primeros_ocho = substr($myuuid, 0, 8);
     $query2= mysqli_query($conectar,"UPDATE pageAssignation SET valueNow='true' where profileId='$profileId' and transId='$transId' and pageId='$pageId'");
     $query2= mysqli_query($conectar,"INSERT INTO transmissionRecord (transId,profileId,pageId,startTime,startDate) values ('$transId','$profileId','$pageId','$hora1','$fechaActual')");
-              
+    $query2= mysqli_query($conectar,"INSERT INTO modelEarn (earnId,modelId,transId,pageId,startDate,startTime) values ('$primeros_ocho','$profileId','$transId','$pageId','$fechaActual','$hora1')");
+   
                          
  echo "true*¡Modelo Conecta@ con exito!";
 
@@ -816,6 +822,8 @@ $query2= mysqli_query($conectar,"UPDATE pageAssignation SET valueNow='false' whe
     
 $query2= mysqli_query($conectar,"UPDATE transmissionRecord SET isActive=0,endTime='$timer',endDate='$fechaActual',totalTime='$totalHours' where profileId='$profileId' and transId='$transId' and isActive=1 and pageId='$pageId'");
 
+
+$query2= mysqli_query($conectar,"UPDATE modelEarn SET isActive=0,endTime='$timer',endDate='$fechaActual',totalTime='$totalHours' where modelId='$profileId' and transId='$transId' and isActive=1 and pageId='$pageId'");
 
      
             
