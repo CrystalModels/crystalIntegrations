@@ -4681,7 +4681,7 @@ if($value=="del"){
 if($value=="close"){
     $query2= mysqli_query($conectar,"UPDATE generalCutting SET isActive=0 where cutId='$cutId'");
     if ($query2) {
-        echo "true*¡Corte activado con exito!";
+        echo "true*¡Corte desactivado con exito!";
     } else {
         echo "false*¡Error en la consulta! " . mysqli_error($conectar);
     }   
@@ -4718,7 +4718,7 @@ $numDias = $diferencia->days;
 
 
 
-        $query1= mysqli_query($conectar,"SELECT startDate,endDate FROM generalCutting where cutId='$cutId'");
+        $query1= mysqli_query($conectar,"SELECT startDate,endDate,realStartDate,realEndDate FROM generalCutting where cutId='$cutId'");
                
           
         if ($query1) {
@@ -4727,16 +4727,23 @@ $numDias = $diferencia->days;
              
                 $startdate= $row['startDate'];
                 $enddate= $row['endDate'];
+                $rstartdate= $row['realStartDate'];
+                $renddate= $row['realEndDate'];
     
                 $fechaInicioObj = new DateTime($startdate);
     $fechaFinObj = new DateTime($enddate);
+
+    $rfechaInicioObj = new DateTime($rstartdate);
+    $rfechaFinObj = new DateTime($renddate);
     
     // Calcular la diferencia entre las fechas
     $diferencia = $fechaInicioObj->diff($fechaFinObj);
+    $rdiferencia = $fechaInicioObj->diff($fechaFinObj);
     
     // Obtener el número de días de la diferencia
     $numDias = $diferencia->days;
-                $query2= mysqli_query($conectar,"UPDATE generalCutting SET totalDays='$numDias' where cutId='$cutId'");
+    $rnumDias = $rdiferencia->days;
+                $query2= mysqli_query($conectar,"UPDATE generalCutting SET totalDays='$numDias',realTotalDays='$rnumDias' where cutId='$cutId'");
        
             }
     
