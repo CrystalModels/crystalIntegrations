@@ -4738,7 +4738,7 @@ $numDias = $diferencia->days;
     
     // Calcular la diferencia entre las fechas
     $diferencia = $fechaInicioObj->diff($fechaFinObj);
-    $rdiferencia = $fechaInicioObj->diff($fechaFinObj);
+    $rdiferencia = $rfechaInicioObj->diff($rfechaFinObj);
     
     // Obtener el número de días de la diferencia
     $numDias = $diferencia->days;
