@@ -4886,4 +4886,230 @@ Flight::route('GET /getPutsCreatedNotStart/', function () {
 
 
 
+
+Flight::route('GET /getPutsCreatedStart/', function () {
+    header("Access-Control-Allow-Origin: *");
+    // Leer los encabezados
+    $headers = getallheaders();
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
+        // Leer los datos de la solicitud
+       
+        // Acceder a los encabezados
+        $apiKey = $headers['Api-Key'];
+        $xApiKey = $headers['x-api-Key'];
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apiKey, 
+          'xApiKey' => $xApiKey
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+           
+
+
+
+           
+            $conectar=conn();
+            
+          
+            $query= mysqli_query($conectar,"SELECT cutId,cutName,startDate,endDate,totalDays,totalAmount,isActive,status,realEndDate,realStartDate,realTotalDays,realTotalAmount FROM generalCutting where isActive=1 and status=1");
+               
+          
+                $values=[];
+          
+                while($row = $query->fetch_assoc())
+                {
+                        $value=[
+                            'cutId' => $row['cutId'],
+                            'cutName' => $row['cutName'],
+                            'startDate' => $row['startDate'],
+                            'endDate' => $row['endDate'],
+                            'totalDays' => $row['totalDays'],
+                            'totalAmount' => $row['totalAmount'],
+                            'isActive' => $row['isActive'],
+                            'status' => $row['status'],
+                            'realEndDate' => $row['realEndDate'],
+                            
+                            'realStartDate' => $row['realStartDate'],
+                            'realTotalDays' => $row['realTotalDays'],
+                            'realTotalAmount' => $row['realTotalAmount']
+                        ];
+                        
+                        array_push($values,$value);
+                        
+                }
+                $row=$query->fetch_assoc();
+                //echo json_encode($students) ;
+                echo json_encode(['puts'=>$values]);
+          
+               
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        } else {
+            echo 'Error: Autenticación fallida';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'Error: Encabezados faltantes';
+    }
+});
+
+
+Flight::route('GET /getPutsCreatedFinished/', function () {
+    header("Access-Control-Allow-Origin: *");
+    // Leer los encabezados
+    $headers = getallheaders();
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
+        // Leer los datos de la solicitud
+       
+        // Acceder a los encabezados
+        $apiKey = $headers['Api-Key'];
+        $xApiKey = $headers['x-api-Key'];
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apiKey, 
+          'xApiKey' => $xApiKey
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+           
+
+
+
+           
+            $conectar=conn();
+            
+          
+            $query= mysqli_query($conectar,"SELECT cutId,cutName,startDate,endDate,totalDays,totalAmount,isActive,status,realEndDate,realStartDate,realTotalDays,realTotalAmount FROM generalCutting where isActive=0 and status=0");
+               
+          
+                $values=[];
+          
+                while($row = $query->fetch_assoc())
+                {
+                        $value=[
+                            'cutId' => $row['cutId'],
+                            'cutName' => $row['cutName'],
+                            'startDate' => $row['startDate'],
+                            'endDate' => $row['endDate'],
+                            'totalDays' => $row['totalDays'],
+                            'totalAmount' => $row['totalAmount'],
+                            'isActive' => $row['isActive'],
+                            'status' => $row['status'],
+                            'realEndDate' => $row['realEndDate'],
+                            
+                            'realStartDate' => $row['realStartDate'],
+                            'realTotalDays' => $row['realTotalDays'],
+                            'realTotalAmount' => $row['realTotalAmount']
+                        ];
+                        
+                        array_push($values,$value);
+                        
+                }
+                $row=$query->fetch_assoc();
+                //echo json_encode($students) ;
+                echo json_encode(['puts'=>$values]);
+          
+               
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        } else {
+            echo 'Error: Autenticación fallida';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'Error: Encabezados faltantes';
+    }
+});
+
+
+
 Flight::start();
