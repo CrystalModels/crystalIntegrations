@@ -4654,7 +4654,7 @@ Flight::route('GET /getModelEarnAdd/@modelId/', function ($modelId) {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmount,t.endAmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status FROM modelEarn t JOIN generalPages p ON p.pageId=t.pageId where t.modelId='$modelId' and t.isActive=0 and t.status=1 ");
+            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmount,t.endAmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status FROM modelEarn t JOIN generalPages p ON p.pageId=t.pageId where t.modelId='$modelId' and t.isActive=0 and t.status=1");
                
           
                 $values=[];
@@ -4696,7 +4696,7 @@ Flight::route('GET /getModelEarnAdd/@modelId/', function ($modelId) {
                 }
                 $row=$query->fetch_assoc();
                 //echo json_encode($students) ;
-                echo json_encode(['logs'=>$values]);
+                echo json_encode(['puts'=>$values]);
           
                
            
