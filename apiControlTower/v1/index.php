@@ -4667,6 +4667,16 @@ if($value=="open"){
     }   
 }
 
+if($value=="del"){
+
+
+    $query2= mysqli_query($conectar,"DELETE FROM generalCutting where cutId='$cutId'");
+    if ($query2) {
+        echo "true*¡Corte eliminado con exito!";
+    } else {
+        echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+    }   
+}
 
 if($value=="close"){
     $query2= mysqli_query($conectar,"UPDATE generalCutting SET isActive=0 where cutId='$cutId'");
