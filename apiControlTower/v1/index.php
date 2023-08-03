@@ -4930,10 +4930,7 @@ if($value=="rev"){
            $startAm= $row['startAmmount'];
            $disAm= $row['discountAmmount'];
            $disPer= $row['dicountPercent'];
-
-        }
-
-        if($disPer>0){
+           if($disPer>0){
 
             $numero = $startAm;
 $porcentaje = $disPer;
@@ -4949,6 +4946,10 @@ $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$
             $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$total' where earnId='$earnId'");
    
         }
+
+        }
+
+       
        
 
     }
