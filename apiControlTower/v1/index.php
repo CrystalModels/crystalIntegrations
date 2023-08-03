@@ -4918,7 +4918,7 @@ Flight::route('POST /adjustModelEarn/@apk/@xapk', function ($apk,$xapk) {
 
     $conectar=conn();
    
-    $query2= mysqli_query($conectar,"UPDATE modelEarn SET '$value'='$comment' where earnId='$earnId'");
+    $query2= mysqli_query($conectar,"UPDATE modelEarn SET $value='$comment' where earnId='$earnId'");
                
     if ($query2) {
         echo "true*¡Ajustado con exito!";
