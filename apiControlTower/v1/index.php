@@ -5099,6 +5099,18 @@ if($value=="send"){
     }        
  
 }
+
+if($value=="close"){
+
+    $query2= mysqli_query($conectar,"UPDATE modelEarn SET isConvalidated=1,status=0 where earnId='$earnId'");
+               
+    if ($query2) {
+        echo "true*¡Ajustado con exito!";
+    } else {
+        echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+    }        
+ 
+}
 else{
 
     $query2= mysqli_query($conectar,"UPDATE modelEarn SET $value='$comment' where earnId='$earnId'");
