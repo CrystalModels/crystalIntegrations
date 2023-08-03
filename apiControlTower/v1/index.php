@@ -5132,8 +5132,22 @@ $numDias = $diferencia->days;
     // Obtener el número de días de la diferencia
     $numDias = $diferencia->days;
     $rnumDias = $rdiferencia->days;
-                $query2= mysqli_query($conectar,"UPDATE generalCutting SET totalDays='$numDias',realTotalDays='$rnumDias' where cutId='$cutId'");
+
+
+    $query1= mysqli_query($conectar,"SELECT SUM(endAmmount) as endAm FROM generalCutting where cuttingId IN (SELECT cutName from generalCutting where cutId='$cutId')");
+               
+          
+    if ($query1) {
+        while ($row = $query1->fetch_assoc()) {
+        
+         
+            $endAmm= $row['endAm'];
+            $query2= mysqli_query($conectar,"UPDATE generalCutting SET totalDays='$numDias',realTotalDays='$rnumDias',totalAmount='$endAmm' where cutId ='$cutId'");
        
+        }
+    }
+
+               
             }
     
         if ($query2) {
