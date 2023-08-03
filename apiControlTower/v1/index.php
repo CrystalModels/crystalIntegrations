@@ -5134,7 +5134,7 @@ $numDias = $diferencia->days;
     $rnumDias = $rdiferencia->days;
 
 
-    $query1= mysqli_query($conectar,"SELECT SUM(endAmmount) as endAm FROM generalCutting where cuttingId IN (SELECT cutName from generalCutting where cutId='$cutId')");
+    $query1= mysqli_query($conectar,"SELECT SUM(endAmmount) as endAm FROM modelEarn where cuttingId IN (SELECT cutName from generalCutting where cutId='$cutId')");
                
           
     if ($query1) {
