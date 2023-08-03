@@ -4970,7 +4970,7 @@ if($value=="send"){
     }        
  
 }
-if($value!="rev" && $value=="send"){
+else{
 
     $query2= mysqli_query($conectar,"UPDATE modelEarn SET $value='$comment' where earnId='$earnId'");
                
