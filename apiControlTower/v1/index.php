@@ -4929,7 +4929,7 @@ if($value=="rev"){
             
            $startAm= $row['startAmmount'];
            $disAm= $row['discountAmmount'];
-           $disPer= $row['dicountPercent'];
+           $disPer= $row['discountPercent'];
            if($disPer>0){
 
             $numero = $startAm;
