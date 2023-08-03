@@ -4939,12 +4939,12 @@ $resultado = ($numero * $porcentaje) / 100;
 $total=$startAm-$resultado;
 
 $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$total' where earnId='$earnId'");
-   
+echo "true*¡Ajustado con exito!";
         }
         else{
             $total=$startAm-$disAm;
             $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$total' where earnId='$earnId'");
-   
+            echo "true*¡Ajustado con exito!";
         }
 
         }
@@ -4952,12 +4952,7 @@ $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$
        
        
 
-    }
-
-
-
-   
-   
+    }   
      else {
         echo "false*¡Error en la consulta! " . mysqli_error($conectar);
     }  
