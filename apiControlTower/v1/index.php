@@ -4472,7 +4472,7 @@ Flight::route('GET /getAllTransmissionList/', function () {
 
 
 
-Flight::route('GET /getModelEarn/@modelId/@sDate/@eDate', function ($modelId,$sDate,$eDate) {
+Flight::route('GET /getModelEarn/@modelId/@cutName', function ($modelId,$cutName) {
     header("Access-Control-Allow-Origin: *");
     // Leer los encabezados
     $headers = getallheaders();
@@ -4525,7 +4525,7 @@ Flight::route('GET /getModelEarn/@modelId/@sDate/@eDate', function ($modelId,$sD
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmount,t.endAmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status,c.name as cutName FROM modelEarn t JOIN generalPages p ON p.pageId=t.pageId JOIN generalCutting c ON c.cutName=t.cuttingId where t.modelId='$modelId' and t.startDate>= '$sDate' and t.rndDate<='$eDate'");
+            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmount,t.endAmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status FROM modelEarn t JOIN generalPages p ON p.pageId=t.pageId where t.modelId='$modelId' and t.cuttingId= '$cutName'");
                
           
                 $values=[];
@@ -4537,7 +4537,6 @@ Flight::route('GET /getModelEarn/@modelId/@sDate/@eDate', function ($modelId,$sD
                             'transId' => $row['transId'],
                             'modelId' => $row['modelId'],
                             'pageId' => $row['pageId'],
-                            'roomName' => $row['roomName'],
                             'pageName' => $row['pageName'],
                             'pageId' => $row['pageId'],
                             'urlPage' => $row['urlPage'],
@@ -4560,8 +4559,7 @@ Flight::route('GET /getModelEarn/@modelId/@sDate/@eDate', function ($modelId,$sD
 
                             
                             'isActive' => $row['isActive'],
-                            'status' => $row['status'],
-                            'cutName' => $row['cutName']
+                            'status' => $row['status']
                         ];
                         
                         array_push($values,$value);
@@ -4569,7 +4567,7 @@ Flight::route('GET /getModelEarn/@modelId/@sDate/@eDate', function ($modelId,$sD
                 }
                 $row=$query->fetch_assoc();
                 //echo json_encode($students) ;
-                echo json_encode(['logs'=>$values]);
+                echo json_encode(['earns'=>$values]);
           
                
            
