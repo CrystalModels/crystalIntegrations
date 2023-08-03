@@ -4921,7 +4921,7 @@ Flight::route('POST /adjustModelEarn/@apk/@xapk', function ($apk,$xapk) {
 if($value=="rev"){
 
 
-    $query1= mysqli_query($conectar,"SELECT startAmmount,discountAmmount,dicountPercent FROM modelEarn where earnId='$earnId'");
+    $query1= mysqli_query($conectar,"SELECT startAmmount,discountAmmount,discountPercent FROM modelEarn where earnId='$earnId'");
                
           
     if ($query1) {
