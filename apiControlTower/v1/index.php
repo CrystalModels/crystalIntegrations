@@ -4653,7 +4653,7 @@ Flight::route('GET /getModelEarnTotal/@modelId/@cutName', function ($modelId,$cu
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT cuttingId,modelId,SUM(startAmmount) as sAmm,SUM(endAmmount) as eAmm,SUM(discountAmmount) as disAmm,SUM(discountPercent) as disPer,SUM(totalTime) as tTime  from modelEarn WHERE modelId='$modelId' and cuttingId='$cutName'");
+            $query= mysqli_query($conectar,"SELECT cuttingId,modelId,SUM(startAmmount) as sAmm,SUM(endAmmount) as eAmm,SUM(discountAmmount) as disAmm,SUM(discountPercent) as disPer,TIME_FORMAT(SEC_TO_TIME(SUM(TIME_TO_SEC(totalTime))), '%H:%i:%s') AS tTime  from modelEarn WHERE modelId='$modelId' and cuttingId='$cutName'");
                
           
                 $values=[];
