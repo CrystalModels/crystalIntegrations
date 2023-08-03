@@ -1,5 +1,7 @@
 # Changelog
 
+## [1.4.0-Beta] - 2023-08-03
+- Implementación de calculos por transmisión
 ## [1.3.0-Beta] - 2023-07-27
 - Endpoints de cortes
 ## [1.2.0-Beta] - 2023-07-27
