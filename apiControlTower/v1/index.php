@@ -4525,7 +4525,7 @@ Flight::route('GET /getModelEarn/@modelId/@sDate/@eDate', function ($modelId,$sD
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,r.name as roomName,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmount,t.endAmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status,c.name as cutName FROM modelEarn t JOIN rooms r ON r.roomId=t.roomId JOIN generalPages p ON p.pageId=t.pageId JOIN generalCutting c ON c.cutId=t.cuttingId where t.modelId='$modelId' and t.startDate>= '$sDate' and t.rndDate<='$eDate'");
+            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmount,t.endAmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status,c.name as cutName FROM modelEarn t JOIN generalPages p ON p.pageId=t.pageId JOIN generalCutting c ON c.cutName=t.cuttingId where t.modelId='$modelId' and t.startDate>= '$sDate' and t.rndDate<='$eDate'");
                
           
                 $values=[];
@@ -4570,6 +4570,112 @@ Flight::route('GET /getModelEarn/@modelId/@sDate/@eDate', function ($modelId,$sD
                 $row=$query->fetch_assoc();
                 //echo json_encode($students) ;
                 echo json_encode(['logs'=>$values]);
+          
+               
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        } else {
+            echo 'Error: Autenticación fallida';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'Error: Encabezados faltantes';
+    }
+});
+
+
+Flight::route('GET /getModelEarnTotal/@modelId/@cutName', function ($modelId,$cutName) {
+    header("Access-Control-Allow-Origin: *");
+    // Leer los encabezados
+    $headers = getallheaders();
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
+        // Leer los datos de la solicitud
+       
+        // Acceder a los encabezados
+        $apiKey = $headers['Api-Key'];
+        $xApiKey = $headers['x-api-Key'];
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apiKey, 
+          'xApiKey' => $xApiKey
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+           
+
+
+
+           
+            $conectar=conn();
+            
+          
+            $query= mysqli_query($conectar,"SELECT cuttingId,modelId,SUM(startAmmount) as sAmm,SUM(endAmmount) as eAmm,SUM(discountAmmount) as disAmm,SUM(discountPercent) as disPer,SUM(totalTime) as tTime WHERE modelId='$modelId' and cuttingId='$cutName'");
+               
+          
+                $values=[];
+          
+                while($row = $query->fetch_assoc())
+                {
+                        $value=[
+                            'cuttingId' => $row['cuttingId'],
+                            'modelId' => $row['modelId'],
+                            'start' => $row['sAmm'],
+                            'end' => $row['eAmm'],
+                            'discount' => $row['disAmm'],
+                            'percent' => $row['disPer'],
+                            'time' => $row['tTime']
+                        ];
+                        
+                        array_push($values,$value);
+                        
+                }
+                $row=$query->fetch_assoc();
+                //echo json_encode($students) ;
+                echo json_encode(['earns'=>$values]);
           
                
            
