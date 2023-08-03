@@ -4525,7 +4525,7 @@ Flight::route('GET /getModelEarn/@modelId/@cutName', function ($modelId,$cutName
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmount,t.endAmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status FROM modelEarn t JOIN generalPages p ON p.pageId=t.pageId where t.modelId='$modelId' and t.cuttingId= '$cutName'");
+            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmmount,t.endAmmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status FROM modelEarn t JOIN generalPages p ON p.pageId=t.pageId where t.modelId='$modelId' and t.cuttingId= '$cutName'");
                
           
                 $values=[];
@@ -4547,8 +4547,8 @@ Flight::route('GET /getModelEarn/@modelId/@cutName', function ($modelId,$cutName
                             'endTime' => $row['endTime'],
 
                             'totalTime' => $row['totalTime'],
-                            'startAmount' => $row['startAmount'],
-                            'endAmount' => $row['endAmount'],
+                            'startAmount' => $row['startAmmount'],
+                            'endAmount' => $row['endAmmount'],
                             'paymentCurrency' => $row['paymentCurrency'],
 
                             
