@@ -4918,6 +4918,51 @@ Flight::route('POST /adjustModelEarn/@apk/@xapk', function ($apk,$xapk) {
 
     $conectar=conn();
    
+if($value=="rev"){
+
+
+    $query1= mysqli_query($conectar,"SELECT startAmmount,discountAmmount,dicountPercent FROM modelEarn where earnId='$earnId'");
+               
+          
+    if ($query1) {
+        while ($row = $query1->fetch_assoc()) {
+            
+           $startAm= $row['startAmmount'];
+           $disAm= $row['discountAmmount'];
+           $disPer= $row['dicountPercent'];
+
+        }
+
+        if($disPer>0){
+
+            $numero = $startAm;
+$porcentaje = $disPer;
+
+$resultado = ($numero * $porcentaje) / 100;
+$total=$startAm-$resultado;
+
+$query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$total' where earnId='$earnId'");
+   
+        }
+        else{
+            $total=$startAm-$disAm;
+            $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$total' where earnId='$earnId'");
+   
+        }
+       
+
+    }
+
+
+
+   
+   
+     else {
+        echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+    }  
+
+}else{
+
     $query2= mysqli_query($conectar,"UPDATE modelEarn SET $value='$comment' where earnId='$earnId'");
                
     if ($query2) {
@@ -4926,7 +4971,7 @@ Flight::route('POST /adjustModelEarn/@apk/@xapk', function ($apk,$xapk) {
         echo "false*¡Error en la consulta! " . mysqli_error($conectar);
     }        
  
-
+}
           
            // echo json_encode($response1);
         } else {
