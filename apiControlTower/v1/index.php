@@ -5172,12 +5172,18 @@ $resultado = ($numero * $porcentaje) / 100;
 $total=$startAm-$resultado;
 
 $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$total' where earnId='$earnId'");
+
+
+
 echo "true*¡Ajustado con exito!";
         }
         if($disPer<=0){
             $total=$startAm-$disAm;
             $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$total' where earnId='$earnId'");
             echo "true*¡Ajustado con exito!";
+
+
+
         }
 
         }
@@ -5206,14 +5212,73 @@ if($value=="send"){
 
 if($value=="close"){
 
+
+    $query1= mysqli_query($conectar,"SELECT e.modelId,e.startAmmount,e.discountAmmount,e.discountPercent,e.endAmmount,e.earnId,e.cuttingId,e.startDate,e.startTime,e.endDate,e.endTime,e.totalTime,e.paymentCurrency,e.comments,p.name FROM modelEarn e JOIN generalPages p ON p.pageId=e.pageId where e.earnId='$earnId'");
+               
+          
+    if ($query1) {
+        while ($row = $query1->fetch_assoc()) {
+            $dta1=[
+           'startAmmount'=> $row['startAmmount'],
+           'discountAmmount'=> $row['discountAmmount'],
+           'discountPercent'=> $row['discountPercent'],
+           'endAmmount'=> $row['endAmmount'],
+           'earnId'=> $row['earnId'],
+           'cuttingId'=> $row['cuttingId'],
+           
+           'startDate'=> $row['startDate'],
+           'endDate'=> $row['endDate'],
+           'startTime'=> $row['startTime'],
+           
+           'endTime'=> $row['endTime'],
+           'totalTime'=> $row['totalTime'],
+           'paymentCurrency'=> $row['paymentCurrency'],
+           
+           'comments'=> $row['comments'],
+           'name'=> $row['name'],
+           'modelId'=> $row['modelId']
+            ];
+           
+
     $query2= mysqli_query($conectar,"UPDATE modelEarn SET isConvalidated=1,status=0 where earnId='$earnId'");
                
+
+
+
     if ($query2) {
+
+
+      
+                 // $rectify=$response2;
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain."/crystalCore/apiUsers/v1/sendMailModelEarn/".$apk."/".$xapk;
+        
+        $curl = curl_init();
+        
+        // Configurar las opciones de la sesión cURL
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $dta1);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        
+        $headers1 = array(
+            'Api-Key: ' . $apk,
+            'x-api-Key: ' . $xapk
+        );
+        curl_setopt($curl, CURLOPT_HTTPHEADER, $headers1);
+        
+        // Ejecutar la solicitud y obtener la respuesta
+        $response3 = curl_exec($curl);
+        
+
+        
         echo "true*¡Ajustado con exito!";
     } else {
         echo "false*¡Error en la consulta! " . mysqli_error($conectar);
     }        
- 
+}
+}
 }
 else{
 
