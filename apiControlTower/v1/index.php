@@ -4654,7 +4654,7 @@ Flight::route('GET /getModelEarnAdd/@modelId/', function ($modelId) {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmmount,t.endAmmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status FROM modelEarn t JOIN generalPages p ON p.pageId=t.pageId where t.modelId='$modelId' and t.isActive=0 and t.status=1");
+            $query= mysqli_query($conectar,"SELECT t.earnId,t.transId,t.modelId,t.pageId,p.name as pageName,p.urlPage,p.pageId,t.startDate,t.startTime,t.endDate,t.endTime,t.totalTime,t.startAmmount,t.endAmmount,t.paymentCurrency,t.cuttingId,t.discountAmmount,t.comments,t.discountPercent,t.isActive,t.status FROM modelEarn t JOIN generalPages p ON p.pageId=t.pageId where t.modelId='$modelId' and t.isActive=0 and t.status=1 and t.isSend=0");
                
           
                 $values=[];
@@ -4941,7 +4941,7 @@ $total=$startAm-$resultado;
 $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$total' where earnId='$earnId'");
 echo "true*¡Ajustado con exito!";
         }
-        else{
+        if($disPer<=0){
             $total=$startAm-$disAm;
             $query2= mysqli_query($conectar,"UPDATE modelEarn SET isVerified=1,endAmmount='$total' where earnId='$earnId'");
             echo "true*¡Ajustado con exito!";
@@ -4957,7 +4957,20 @@ echo "true*¡Ajustado con exito!";
         echo "false*¡Error en la consulta! " . mysqli_error($conectar);
     }  
 
-}else{
+}
+
+if($value=="send"){
+
+    $query2= mysqli_query($conectar,"UPDATE modelEarn SET isSend=1 where earnId='$earnId'");
+               
+    if ($query2) {
+        echo "true*¡Ajustado con exito!";
+    } else {
+        echo "false*¡Error en la consulta! " . mysqli_error($conectar);
+    }        
+ 
+}
+if($value!="rev" && $value=="send"){
 
     $query2= mysqli_query($conectar,"UPDATE modelEarn SET $value='$comment' where earnId='$earnId'");
                
@@ -4968,6 +4981,7 @@ echo "true*¡Ajustado con exito!";
     }        
  
 }
+
           
            // echo json_encode($response1);
         } else {
