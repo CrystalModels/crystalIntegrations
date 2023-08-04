@@ -913,7 +913,7 @@ Flight::route('POST /assignPages/@apk/@xapk', function ($apk,$xapk) {
             
                 $isActive= $row['isActive'];
 
-                if($isActive=1){
+                if($isActive==1){
 
 
                     require('../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php');
