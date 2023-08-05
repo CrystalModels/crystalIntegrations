@@ -905,15 +905,41 @@ Flight::route('POST /assignPages/@apk/@xapk', function ($apk,$xapk) {
     if($nr<=0){
 
 
-        require('../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php');
-        $con=new generateUuid();
-            $myuuid = $con->guidv4();
-            $primeros_ocho = substr($myuuid, 0, 8);
-
-    $query2= mysqli_query($conectar,"INSERT INTO pageAssignation (transId,profileId,pageId) VALUES ('$primeros_ocho','$profileId','$pageId')");
+        $query1= mysqli_query($conectar,"SELECT isActive FROM generalPages where pageId='$pageId'");
                
-                         
- echo "true*¡Página asignada con exito!";
+          
+        if ($query1) {
+            while ($row = $query1->fetch_assoc()) {
+            
+                $isActive= $row['isActive'];
+
+                if($isActive==1){
+
+
+                    require('../../apiControlTower/v1/model/modelSecurity/uuid/uuidd.php');
+                    $con=new generateUuid();
+                        $myuuid = $con->guidv4();
+                        $primeros_ocho = substr($myuuid, 0, 8);
+            
+                $query2= mysqli_query($conectar,"INSERT INTO pageAssignation (transId,profileId,pageId) VALUES ('$primeros_ocho','$profileId','$pageId')");
+                           
+                                     
+             echo "true*¡Página asignada con exito!";
+            
+                }
+                else{
+                    echo "false*¡Página desactivada!";
+                }
+            }}else{
+
+                echo "false*¡Página desactivada!";
+            }
+
+
+
+
+
+
 
     }else{
         echo 'false*¡Página asignada previamente!';
@@ -2688,6 +2714,114 @@ Flight::route('GET /getAllPages/', function () {
             
           
             $query= mysqli_query($conectar,"SELECT pageId,name,currency,percentValue,updatedAt,isActive,status,urlPage FROM generalPages");
+               
+          
+                $values=[];
+          
+                while($row = $query->fetch_assoc())
+                {
+                        $value=[
+                            'pageId' => $row['pageId'],
+                            'name' => $row['name'],
+                            'currency' => $row['currency'],
+                            'percentValue' => $row['percentValue'],
+                            'updatedAt' => $row['updatedAt'],
+                            'status' => $row['status'],
+                            'isActive' => $row['isActive'],
+                            'urlPage' => $row['urlPage']
+                        ];
+                        
+                        array_push($values,$value);
+                        
+                }
+                $row=$query->fetch_assoc();
+                //echo json_encode($students) ;
+                echo json_encode(['pages'=>$values]);
+          
+               
+           
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        } else {
+            echo 'Error: Autenticación fallida';
+             //echo json_encode($response1);
+        }
+    } else {
+        echo 'Error: Encabezados faltantes';
+    }
+});
+
+
+
+Flight::route('GET /getAllPagesas/', function () {
+    header("Access-Control-Allow-Origin: *");
+    // Leer los encabezados
+    $headers = getallheaders();
+    
+    // Verificar si los encabezados 'Api-Key' y 'Secret-Key' existen
+    if (isset($headers['Api-Key']) && isset($headers['x-api-Key'])) {
+        // Leer los datos de la solicitud
+       
+        // Acceder a los encabezados
+        $apiKey = $headers['Api-Key'];
+        $xApiKey = $headers['x-api-Key'];
+        
+        $sub_domaincon=new model_domain();
+        $sub_domain=$sub_domaincon->dom();
+        $url = $sub_domain.'/crystalCore/apiAuth/v1/authApiKey/';
+      
+        $data = array(
+          'apiKey' =>$apiKey, 
+          'xApiKey' => $xApiKey
+          
+          );
+      $curl = curl_init();
+      
+      // Configurar las opciones de la sesión cURL
+      curl_setopt($curl, CURLOPT_URL, $url);
+      curl_setopt($curl, CURLOPT_POST, true);
+      curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+      curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+      // curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+      
+      // Ejecutar la solicitud y obtener la respuesta
+      $response1 = curl_exec($curl);
+
+      
+
+
+      curl_close($curl);
+
+      
+
+        // Realizar acciones basadas en los valores de los encabezados
+
+
+        if ($response1 == 'true' ) {
+           
+
+
+
+           
+            $conectar=conn();
+            
+          
+            $query= mysqli_query($conectar,"SELECT pageId,name,currency,percentValue,updatedAt,isActive,status,urlPage FROM generalPages where status=1");
                
           
                 $values=[];
