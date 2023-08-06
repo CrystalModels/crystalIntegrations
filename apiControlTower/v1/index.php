@@ -595,11 +595,20 @@ Flight::route('POST /putMyAlert/@apk/@xapk', function ($apk,$xapk) {
 
     $conectar=conn();
     
-    $query2= mysqli_query($conectar,"UPDATE generalAlerts SET alertResponse='$response',isActive=0 where alertId='$alertId' and profileId='$profileId'");
+
+    if($response=="del"){
+        $query2= mysqli_query($conectar,"DELETE generalAlerts where alertId='$alertId' and profileId='$profileId'");
                
                          
- echo "true*¡Alerta editada con exito!";
+        echo "true*¡Alerta eliminada con exito!";
+    }else{
 
+        $query2= mysqli_query($conectar,"UPDATE generalAlerts SET alertResponse='$response',isActive=0 where alertId='$alertId' and profileId='$profileId'");
+               
+                         
+        echo "true*¡Alerta respondida con exito!";
+       
+    }
 
            // echo json_encode($response1);
         } else {
