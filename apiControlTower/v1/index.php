@@ -597,7 +597,7 @@ Flight::route('POST /putMyAlert/@apk/@xapk', function ($apk,$xapk) {
     
 
     if($response=="del"){
-        $query2= mysqli_query($conectar,"DELETE generalAlerts where alertId='$alertId' and profileId='$profileId'");
+        $query2= mysqli_query($conectar,"DELETE from generalAlerts where alertId='$alertId' and profileId='$profileId'");
                
                          
         echo "true*¡Alerta eliminada con exito!";
