@@ -2052,7 +2052,7 @@ Flight::route('GET /getAllRoomsFalse/', function () {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT roomId,name,comments,profileId,isActive,status,updatedAt FROM rooms where profileId='0'");
+            $query= mysqli_query($conectar,"SELECT roomId,name,comments,profileId,isActive,status,updatedAt FROM rooms where profileId='0' and status =1");
                
           
                 $values=[];
