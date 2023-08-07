@@ -1,5 +1,9 @@
 # Changelog
 
+
+## [1.0.0-pr] - 2023-08-03
+- Sistema base
+
 ## [1.5.0-Beta] - 2023-08-03
 - Implementación notificaciones por correo
 ## [1.4.0-Beta] - 2023-08-03
