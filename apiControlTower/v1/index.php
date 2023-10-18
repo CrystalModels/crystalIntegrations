@@ -3174,7 +3174,7 @@ Flight::route('GET /getAllPagesModelsNot/@modelId', function ($modelId) {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.status,tl.isActive,tl.pageId,tl.valueNow,pl.name as pageName,pl.urlPage,pageUserName,pageKey FROM pageAssignation tl JOIN generalPages pl ON pl.pageId=tl.pageId  where tl.profileId='$modelId' and tl.valueNow='false'");
+            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.status,tl.isActive,tl.pageId,tl.valueNow,pl.name as pageName,pl.urlPage,tl.pageUserName,tl.pageKey FROM pageAssignation tl JOIN generalPages pl ON pl.pageId=tl.pageId  where tl.profileId='$modelId' and tl.valueNow='false'");
                
           
                 $values=[];
