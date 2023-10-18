@@ -543,6 +543,12 @@ Flight::route('POST /editCredentials/@apk/@xapk', function ($apk,$xapk) {
    
 
     }
+    if($param=="pLink"){
+
+        $query2= mysqli_query($conectar,"UPDATE pageAssignation SET pageLink='$value' where transId='$transId'");
+   
+
+    }
                
                          
  echo "true*¡Página editada con exito!";
@@ -3262,7 +3268,7 @@ Flight::route('GET /getAllPagesModelsNot/@modelId', function ($modelId) {
             $conectar=conn();
             
           
-            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.status,tl.isActive,tl.pageId,tl.valueNow,pl.name as pageName,pl.urlPage,tl.pageUserName,tl.pageKey FROM pageAssignation tl JOIN generalPages pl ON pl.pageId=tl.pageId  where tl.profileId='$modelId' and tl.valueNow='false'");
+            $query= mysqli_query($conectar,"SELECT tl.transId,tl.profileId,tl.status,tl.isActive,tl.pageId,tl.valueNow,pl.name as pageName,pl.urlPage,tl.pageUserName,tl.pageKey,tl.pageLink FROM pageAssignation tl JOIN generalPages pl ON pl.pageId=tl.pageId  where tl.profileId='$modelId' and tl.valueNow='false'");
                
           
                 $values=[];
@@ -3279,7 +3285,8 @@ Flight::route('GET /getAllPagesModelsNot/@modelId', function ($modelId) {
                             'pageName' => $row['pageName'],
                             'urlPage' => $row['urlPage'],
                             'pageUserName' => $row['pageUserName'],
-                            'pageKey' => $row['pageKey']
+                            'pageKey' => $row['pageKey'],
+                            'pageLink' => $row['pageLink']
                         ];
                         
                         array_push($values,$value);
