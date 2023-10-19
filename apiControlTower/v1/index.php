@@ -4403,12 +4403,12 @@ Flight::route('POST /putPages/@apk/@xapk', function ($apk,$xapk) {
    
   
     $query2= mysqli_query($conectar,"UPDATE generalPages set name='$pageName',urlPage='$urlPage',percentValue='$percentValue' where pageId='$pageId'");
-    $result = mysqli_query($conectar, $query);
+    $result = mysqli_query($conectar, $query2);
 
     if ($result) {
         echo "true*¡Página editada con exito¡";
     } else {
-        echo "Error en la consulta UPDATE: " . mysqli_error($conectar);
+        echo "false*¡Error en la consulta UPDATE: " . mysqli_error($conectar);
     }
                          
 
