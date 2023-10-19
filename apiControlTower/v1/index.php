@@ -4402,7 +4402,7 @@ Flight::route('POST /putPages/@apk/@xapk', function ($apk,$xapk) {
     $conectar=conn();
    
   
-    $query2= mysqli_query($conectar,"UPDATE generalPages SET name='$pageName',urlPage='$urlPage',percentValue=$percentValue where pageId='$pageId'");
+    $query2= mysqli_query($conectar,"UPDATE generalPages SET name='$pageName' where pageId='$pageId'");
     //$result = mysqli_query($conectar, $query2);
 
     
