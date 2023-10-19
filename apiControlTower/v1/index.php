@@ -4411,7 +4411,7 @@ Flight::route('POST /putPages/@apk/@xapk', function ($apk,$xapk) {
         echo "false*¡Error en la consulta: " . mysqli_error($conectar);
     }
                          
-
+    echo "true*¡Página editada con exito 123¡";
 
 
            // echo json_encode($response1);
