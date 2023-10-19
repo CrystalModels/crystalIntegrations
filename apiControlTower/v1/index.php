@@ -4406,7 +4406,7 @@ Flight::route('POST /putPages/@apk/@xapk', function ($apk,$xapk) {
     //$result = mysqli_query($conectar, $query2);
 
     
-        echo "true*¡Página editada con exito 123¡";
+        echo "true*¡Página editada con exito 123¡".$pageId;
    
                          
 
